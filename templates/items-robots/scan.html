@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Sky Mall - Face Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .title {
+            font-size: 18px;
+            color: purple;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 18px;
+            color: red;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .buttons button {
+            width: 120px;
+            height: 120px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease, font-size 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .buttons button:hover {
+            transform: scale(1.1);
+            background-color: #555;
+            font-size: 18px;
+        }
+        .back-button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <script src="../../static/js/background.js"></script>
+    <div class="header">
+        星空商场 Starry Sky Mall
+    </div>
+    <div class="navbar">
+        <a href="/Commodity">查看商品</a>
+        <a href="face/" class="active">人脸识别</a>
+        <a href="jf_Commodity/">积分商城</a>
+        <a href="/discount">优惠活动</a>
+    </div>
+    <div class="container">
+        <div class="message">未能成功识别</div>
+        <div class="buttons">
+            <button onclick="retry()">已是会员<br>重新扫描</button>
+            <button onclick="register()">不是会员<br>现在注册</button>
+        </div>
+        <a href="#" class="back-button">返回</a>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function retry() {
+            alert("重新扫描功能尚未实现");
+            // 在这里添加重新扫描的逻辑
+        }
+
+        function register() {
+            alert("注册功能尚未实现");
+            // 在这里添加注册的逻辑
+        }
+
+        // Add active class to the current button (highlight it)
+        var navbar = document.querySelector('.navbar');
+        var links = navbar.getElementsByTagName('a');
+        for (var i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function() {
+                var current = document.getElementsByClassName('active');
+                if (current.length > 0) { 
+                    current[0].className = current[0].className.replace(' active', '');
+                }
+                this.className += ' active';
+            });
+        }
+    </script>
+</body>
+</html>

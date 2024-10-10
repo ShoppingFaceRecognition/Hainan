@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空商城 Starry Sky Mall</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            margin: 0;
+            padding: 0;
+            user-select: none; /* 禁止选择文字 */
+        }
+        .header, .footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .message {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .back-button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #555;
+        }
+        .circle {
+            width: 300px;
+            height: 300px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #800080; /* 紫色 */
+        }
+        .loading {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <script src="../../static/js/background.js"></script>
+    <div class="header">
+        星空商城 Starry Sky Mall
+    </div>
+    <div class="navbar">
+        <a href="/Commodity/">查看商品</a>
+        <a href="/static/ai_guodo.html">识别中的页面</a>
+        <a href="/jf_Commodity/">积分商城</a>
+        <a href="/discount/">优惠活动</a>
+    </div>
+    <div class="container">
+        <div class="message">
+            点击“人脸识别”之后，<br>
+            在以下圆内显示识别结果。
+        </div>
+        <div class="circle">
+            显示识别人脸
+        </div>
+        <div class="loading">
+            识别中......
+        </div>
+        <a href="/identity/">确认界面</a>
+        <a href="/login/" class="back-button">直接登录</a>
+        <a href="/" class="back-button">返回</a>
+    </div>
+    <div class="footer">
+        星空商城 Starry Sky Mall
+    </div>
+</body>
+</html>

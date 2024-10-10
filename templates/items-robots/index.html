@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空商场 Starry Sky Mall</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #2b2b2b;
+        }
+
+        /* 粒子背景 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* 标题部分 */
+        .header {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* 导航栏 */
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+
+        .nav a:hover {
+            background-color: #555;
+        }
+
+        /* 内容部分 */
+        .content {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 轮播容器 */
+        .carousel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            width: 100%;
+            margin-top: 40px; /* 向下移动 */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            width: 800px;
+            height: 200px;
+        }
+
+        ul:hover {
+            cursor: pointer;
+        }
+
+        li {
+            float: left;
+            position: absolute;
+            transition-duration: 0.4s;
+        }
+
+        li img {
+            width: 400px;
+            height: 200px;
+            transition: transform 0.5s ease;
+            object-fit: cover;
+        }
+
+        li img:hover {
+            transform: scale(1.1);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .carousel-dots div {
+            width: 50px;
+            height: 5px;
+            margin: 0 5px;
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-dots .active {
+            background-color: #e431fc;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 2em;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-control.left {
+            left: 0;
+        }
+
+        .carousel-control.right {
+            right: 0;
+        }
+
+        /* 地图部分 */
+        .map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .map-container img {
+            width: 180px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s, top 0.3s, left 0.3s;
+        }
+
+        .map-container img.zoomed {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(4);
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 标题部分 -->
+    <div class="header">
+        <h1>星空商场 Starry Sky Mall</h1>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="nav">
+        <a href="Commodity/">查看商品</a>
+        <a href="face/">人脸识别</a>
+        <a href="jf_Commodity/">积分商城</a>
+        <a href="discount/">优惠活动</a>
+    </div>
+
+    <!-- 商品部分 -->
+    <div id="products" class="content active">
+        <!-- 轮播容器 -->
+        <div class="carousel-container">
+            <ul id="banner"></ul>
+        </div>
+        <!-- 轮播圆点 -->
+        <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
+
+    <!-- 地图部分 -->
+    <div class="map-container">
+        <img src="/static/img/6.jpg" alt="商场地图" onclick="toggleZoom(this)">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script>
+        function toggleZoom(img) {
+            img.classList.toggle('zoomed');
+        }
+
+        window.onload = function () {
+            let timer = setInterval(get_next, 3000)
+            let sz = new Array();
+            let szdiv = new Array()
+            var cur_ul = document.getElementById("banner");
+            for (let i = 1; i <= 5; i++) {
+                var cur_li = document.createElement("li");
+                var cur_img = document.createElement("img");
+
+                cur_img.src = "/static/img/" + i + ".png";
+                cur_img.style.width = "400px";
+                cur_img.style.height = "200px";
+                cur_li.appendChild(cur_img);
+
+                cur_li.onmouseenter = function () {
+                    clearInterval(timer);
+                }
+                cur_li.onmouseleave = function () {
+                    timer = setInterval(get_next, 3000)
+                }
+
+                if (i != 5) {
+                    cur_li.id = 5 - i;
+                } else {
+                    cur_li.id = 5;
+                }
+
+                cur_ul.appendChild(cur_li)
+                sz.push(cur_li);
+                sz[sz.length - 1].style.left = "0px";
+
+                let bottom_div = document.createElement("div");
+                bottom_div.style.left = 125 * i + "px";
+                bottom_div.name = i;
+                szdiv.push(bottom_div)
+                cur_ul.appendChild(bottom_div);
+
+            }
+
+            let pre_img = document.createElement("img")
+            pre_img.src = "/static/img/preImg.png";
+            pre_img.style.position = "absolute";
+            pre_img.style.left = 0;
+            pre_img.style.top = 0;
+            pre_img.style.bottom = 0;
+            pre_img.style.margin = "auto"
+            pre_img.style.zIndex = 100;
+            cur_ul.appendChild(pre_img);
+
+            let nex_img = document.createElement("img")
+            nex_img.src = "/static/img/nexImg.png";
+            nex_img.style.position = "absolute";
+            nex_img.style.right = 0;
+            nex_img.style.top = 0;
+            nex_img.style.bottom = 0;
+            nex_img.style.margin = "auto"
+            nex_img.style.zIndex = 100;
+            cur_ul.appendChild(nex_img);
+
+            pre_img.onclick = function () {
+                clearInterval(timer);
+                get_pre();
+                timer = setInterval(get_next, 3000)
+            }
+
+            nex_img.onclick = function () {
+                clearInterval(timer);
+                get_next();
+                timer = setInterval(get_next, 3000)
+            }
+
+
+            let len = sz.length - 1;
+            sz[len - 2].style.left = "0px";
+            sz[len - 1].style.zIndex = 100;
+            sz[len - 1].style.left = "200px";
+            sz[len - 1].style.transform = "scale(1.3)";
+            sz[len].style.left = "400px";
+
+            szdiv[0].style.background = "#e431fc"
+
+            for (let i = 0; i < szdiv.length; i++) {
+                szdiv[i].onmouseenter = function () {
+                    clearInterval(timer);
+                    let len1 = sz[len - 1].id;
+                    let len2 = szdiv[i].name;
+                    let dis = Math.max(len1, len2) - Math.min(len1, len2)
+                    if (len1 > len2) {
+                        while (dis--)
+                            get_pre()
+                    } else {
+                        while (dis--)
+                            get_next()
+                    }
+                    timer = setInterval(get_next, 3000)
+                }
+            }
+
+
+            function get_pre() {
+                let give_up = sz[0];
+                sz.shift()
+                sz.push(give_up)
+                for (let i = 0; i < sz.length; i++) {
+                    sz[i].style.zIndex = i;
+                    sz[i].style.transform = "scale(1)"
+                }
+                sz[len - 2].style.left = "0px";
+
+
+                sz[len - 1].style.zIndex = 100
+                sz[len - 1].style.left = "200px";
+                sz[len - 1].style.transform = "scale(1.3)"
+                sz[len - 1].style.opacity = 1;
+                sz[len].style.left = "400px";
+                sync_szdiv()
+            }
+
+            function get_next() {
+                let give_up = sz[len];
+                sz.pop()
+                sz.unshift(give_up)
+                for (let i = 0; i < sz.length; i++) {
+                    sz[i].style.zIndex = i;
+                    sz[i].style.transform = "scale(1)"
+                }
+                sz[len - 2].style.left = "0px";
+                sz[len - 1].style.zIndex = 100
+                sz[len - 1].style.left = "200px";
+                sz[len - 1].style.transform = "scale(1.3)"
+                sz[len - 1].style.opacity = 1;
+                sz[len].style.left = "400px";
+                sync_szdiv()
+            }
+
+            function sync_szdiv() {
+                for (let i = 0; i < szdiv.length; i++) {
+                    if (szdiv[i].name == sz[len - 1].id)
+                        szdiv[i].style.background = "#e431fc"
+                    else
+                        szdiv[i].style.background = "white"
+                }
+            }
+        }
+
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                    "image": {
+                        "src": "img/github.svg",
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Sky Mall - Verification Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .title {
+            font-size: 18px;
+            color: purple;
+            margin-bottom: 20px;
+        }
+        .result {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .result img {
+            width: 150px;
+            height: 200px;
+            background-color: #ccc;
+            margin-right: 20px;
+        }
+        .result-info {
+            text-align: left;
+        }
+        .result-info p {
+            margin: 5px 0;
+        }
+        .question {
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .buttons button {
+            width: 120px;
+            height: 120px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease, font-size 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .buttons button:hover {
+            transform: scale(1.1);
+            background-color: #555;
+            font-size: 18px;
+        }
+        .back-button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <script src="../../static/js/background.js"></script>
+    <div class="header">
+        星空商场 Starry Sky Mall
+    </div>
+    <div class="navbar">
+        <a href="/Commodity/">查看商品</a>
+        <a href="/jf_Commodity/" class="active">积分商城</a>
+        <a href="/discount/">优惠活动</a>
+        <a href="/logout/">退出登录</a>
+    </div>
+    <div class="container">
+        <div class="title">确认人脸</div>
+        <div class="result">
+            <img src="#" alt="扫描人像">
+            <div class="result-info">
+                <p>用户名: 测试用户</p>
+                <p>手机号: 123****5678</p>
+            </div>
+        </div>
+        <div class="title">这是您的账号吗?</div>
+        <div class="buttons">
+            <button onclick="confirm()">是</button>
+            <button onclick="retry()">不是, 重新扫描</button>
+            <button onclick="register()">不是, 注册会员</button>
+        </div>
+        <a href="#" class="back-button">返回</a>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function confirm() {
+            alert("确认功能尚未实现");
+            // 在这里添加确认的逻辑
+        }
+
+        function retry() {
+            alert("重新扫描功能尚未实现");
+            // 在这里添加重新扫描的逻辑
+        }
+
+        function register() {
+            alert("注册功能尚未实现");
+            // 在这里添加注册的逻辑
+        }
+
+        // Add active class to the current button (highlight it)
+        var navbar = document.querySelector('.navbar');
+        var links = navbar.getElementsByTagName('a');
+        for (var i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function() {
+                var current = document.getElementsByClassName('active');
+                if (current.length > 0) { 
+                    current[0].className = current[0].className.replace(' active', '');
+                }
+                this.className += ' active';
+            });
+        }
+    </script>
+</body>
+</html>

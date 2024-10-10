@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Sky Mall - Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: purple;
+            text-align: center;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .cart-item {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            flex: 1 0 45%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            margin-right: 20px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-control button {
+            padding: 5px;
+            border: 1px solid #ccc;
+            background-color: #eee;
+            cursor: pointer;
+        }
+
+        .quantity-control input {
+            width: 40px;
+            text-align: center;
+            margin: 0 5px;
+        }
+
+        .summary {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .summary p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .buttons button:hover {
+            background-color: #555;
+        }
+
+        .back-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        .cart-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    星空商场 Starry Sky Mall
+</div>
+<div class="navbar">
+    <a href="/Commodity/">查看商品</a>
+    <a href="/jf_Commodity/">积分商城</a>
+    <a href="/discount/">优惠活动</a>
+    <a href="/logout/">退出登录</a>
+</div>
+<div class="container">
+    <div class="cart-items">
+        <!-- Example cart item -->
+        {% for c in cart %}
+            <div class="cart-item">
+                <input type="checkbox" onchange="updateTotal()">
+                <img src="{{ c.product.img.url }}" alt="Product Image">
+                <div class="cart-item-details">
+                    <p>{{ c.product.name }}</p>
+                    <p>价格: ¥<span class="price">{{ c.product.price }}</span></p>
+                    <div class="quantity-control">
+                        <button onclick="updateQuantity(this, -1)">-</button>
+                        <input type="text" value="1" readonly>
+                        <button onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+
+        <div class="summary">
+            <p>合计: ¥<span id="total-price">0.00</span></p>
+            <p>积分: ¥<span id="total-points">0.00</span></p>
+        </div>
+        <div class="buttons">
+            <button onclick="goBack()">返回</button>
+            <button onclick="location.href='place_an_order.html'">确认下单</button>
+        </div>
+    </div>
+    <script src="../../static/js/background.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function updateQuantity(element, delta) {
+            var input = element.parentElement.querySelector('input[type="text"]');
+            var value = parseInt(input.value) + delta;
+            if (value < 1) value = 1;
+            input.value = value;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            var cartItems = document.querySelectorAll('.cart-item');
+            var totalPrice = 0;
+            cartItems.forEach(function (item) {
+                if (item.querySelector('input[type="checkbox"]').checked) {
+                    var price = parseFloat(item.querySelector('.price').textContent);
+                    var quantity = parseInt(item.querySelector('input[type="text"]').value);
+                    totalPrice += price * quantity;
+                }
+            });
+            document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+            document.getElementById('total-points').textContent = (totalPrice * 10).toFixed(2);
+        }
+
+        // Initial total calculation
+        updateTotal();
+
+        // Add active class to the current button (highlight it)
+        var navbar = document.querySelector('.navbar');
+        var links = navbar.getElementsByTagName('a');
+        for (var i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function () {
+                var current = document.getElementsByClassName('active');
+                if (current.length > 0) {
+                    current[0].className = current[0].className.replace(' active', '');
+                }
+                this.className += ' active';
+            });
+        }
+    </script>
+</body>
+</html>

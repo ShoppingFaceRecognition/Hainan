@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Sky Mall - Points Mall</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            user-select: none; /* 禁止选择文字 */
+            background: linear-gradient(to right, #1e3c72, #2a5298); /* 设置背景渐变颜色 */
+        }
+
+        /* 粒子背景 */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            z-index: 1; /* 使容器内容在粒子效果上方 */
+        }
+
+        .profile {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+        }
+
+        .title {
+            font-size: 18px;
+            color: purple;
+            margin-bottom: 20px;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+            cursor: grab;
+        }
+
+        .carousel:active {
+            cursor: grabbing;
+        }
+
+        .coupon {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 200px;
+            margin: 0 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .coupon p {
+            margin: 10px 0;
+        }
+
+        .coupon button {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        .coupon button:hover {
+            background-color: #555;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .carousel-dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .carousel-dots .active {
+            background-color: #333;
+        }
+
+        .back-button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+            position: absolute;
+            bottom: -50px; /* 调整位置 */
+            left: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        .products-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 200px;
+            margin: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .product p {
+            margin: 10px 0;
+        }
+
+        .draggable-container {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* 隐藏滚动条 */
+            -ms-overflow-style: none; /* 隐藏滚动条 */
+        }
+
+        .draggable-container::-webkit-scrollbar {
+            display: none; /* 隐藏滚动条 */
+        }
+    </style>
+</head>
+<body>
+<!-- 粒子背景 -->
+<div id="particles-js"></div>
+
+<div class="header">
+    星空商场 Starry Sky Mall
+</div>
+<div class="navbar">
+    <a href="/Commodity/">查看商品</a>
+    <a href="/face/">人脸识别</a>
+    <a href="/jf_Commodity/">积分商城</a>
+    <a href="/discount/">优惠活动</a>
+</div>
+<div class="container">
+    <div class="profile">
+        <img src="{{ user.face_img_path }}" alt="用户头像">
+        <div class="profile-info">
+            <p>用户：{{ user.username }}</p>
+            <p>总积分：{{ user.fen }}</p>
+        </div>
+    </div>
+
+    <div class="carousel-dots">
+        <span class="active" onclick="currentSlide(0)"></span>
+        <span onclick="currentSlide(1)"></span>
+        <span onclick="currentSlide(2)"></span>
+    </div>
+    <div class="title" style="margin-top: 40px;">商品兑换</div>
+    <div class="products-container draggable-container">
+        {% for foo in jf_commodity %}
+            <div class="product">
+                <img src="{{ foo.img.url }}" width="200px" height="200px">
+                <p>{{ foo.name }}</p>
+                <p>{{ foo.price }}</p>
+                <form method="post" action="{% url 'exchange_product' foo.id %}">
+                    {% csrf_token %}
+                    <button type="submit">兑换</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    <a onclick="goBack()" class="back-button">返回</a>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+
+    let slideIndex = 0;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    const carousels = document.querySelectorAll('.draggable-container');
+
+    carousels.forEach(carousel => {
+        carousel.addEventListener('mousedown', (e) => {
+            isDown = true;
+            carousel.classList.add('active');
+            startX = e.pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            isDown = false;
+            carousel.classList.remove('active');
+        });
+
+        carousel.addEventListener('mouseup', () => {
+            isDown = false;
+            carousel.classList.remove('active');
+        });
+
+        carousel.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - carousel.offsetLeft;
+            const walk = (x - startX) * 2; // scroll-fast
+            carousel.scrollLeft = scrollLeft - walk;
+        });
+    });
+
+    function showSlides(n) {
+        const dots = document.querySelectorAll('.carousel-dots span');
+        if (n >= dots.length) {
+            slideIndex = 0;
+        }
+        if (n < 0) {
+            slideIndex = dots.length - 1;
+        }
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[slideIndex].classList.add('active');
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+        const carousel = document.getElementById('carousel');
+        carousel.scrollLeft = slideIndex * (carousel.clientWidth / 3); // 根据实际显示的数量调整此值
+    }
+
+    // Add active class to the current button (highlight it)
+    var navbar = document.querySelector('.navbar');
+    var links = navbar.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', function () {
+            var current = document.getElementsByClassName('active');
+            if (current.length > 0) {
+                current[0].className = current[0].className.replace(' active', '');
+            }
+            this.className += ' active';
+        });
+    }
+
+    showSlides(slideIndex);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                    "image": {
+                        "src": "img/github.svg",
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    });
+</script>
+</body>
+</html>

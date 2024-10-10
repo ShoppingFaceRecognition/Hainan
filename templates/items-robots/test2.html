@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空商场 Starry Sky Mall</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2b2b2b;
+            color: white;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .header {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+
+        .nav a:hover {
+            background-color: #555;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .carousel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .carousel {
+            position: relative;
+            width: 50%;
+            overflow: hidden;
+            margin: 0 10px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 1s ease;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            transition: transform 1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+            vertical-align: middle;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item img:hover {
+            transform: scale(1.1);
+        }
+
+        .carousel-thumbnails {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .carousel-thumbnail {
+            cursor: pointer;
+            margin: 0 5px;
+            transition: transform 0.5s ease;
+            flex-shrink: 0;
+        }
+
+        .carousel-thumbnail img {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .carousel-thumbnail img.active {
+            border: 2px solid #333;
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .carousel-control {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            font-size: 2em;
+            padding: 10px;
+            cursor: pointer;
+            margin: 0 20px;
+            pointer-events: all;
+        }
+
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .carousel-dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .carousel-dots .active {
+            background-color: #333;
+        }
+
+        .map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: -10px;
+        }
+
+        .map-container img {
+            width: 180px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .map-container img:hover {
+            transform: scale(1.05);
+        }
+
+        .map-container img:active {
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="particles-js"></div>
+
+    <div class="header">
+        <h1>星空商场 Starry Sky Mall</h1>
+    </div>
+
+    <div class="nav">
+        <a href="#products" onclick="showContent('products')">查看商品</a>
+        <a href="#face-recognition" onclick="showContent('face-recognition')">人脸识别</a>
+        <a href="#points-mall" onclick="showContent('points-mall')">积分商城</a>
+        <a href="#promotions" onclick="showContent('promotions')">优惠活动</a>
+    </div>
+
+    <div class="content">
+        <div class="carousel-container">
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="../../static/img/1.jpg" alt="Image 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../../static/img/2.jpg" alt="Image 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../../static/img/3.jpg" alt="Image 3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../../static/img/4.jpg" alt="Image 4">
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-control" onclick="prevSlide()">&#10094;</button>
+                    <button class="carousel-control" onclick="nextSlide()">&#10095;</button>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-dots">
+            <span class="active" onclick="showSlide(0)"></span>
+            <span onclick="showSlide(1)"></span>
+            <span onclick="showSlide(2)"></span>
+            <span onclick="showSlide(3)"></span>
+        </div>
+    </div>
+
+    <div class="map-container">
+        <img src="../../static/img/6.jpg" alt="商场地图">
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.carousel-dots span');
+            if (index >= slides.length) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = slides.length - 1;
+            } else {
+                currentIndex = index;
+            }
+            const offset = -currentIndex * 100;
+            document.querySelector('.carousel-inner').style.transform = `translateX(${offset}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 3000);
+        }
+
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(currentIndex);
+            startSlideShow();
+
+            const carousel = document.querySelector('.carousel');
+            carousel.addEventListener('mouseenter', stopSlideShow);
+            carousel.addEventListener('mouseleave', startSlideShow);
+
+            const dots = document.querySelectorAll('.carousel-dots span');
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+
+            document.querySelector('.carousel-control.left').addEventListener('click', prevSlide);
+            document.querySelector('.carousel-control.right').addEventListener('click', nextSlide);
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                    "image": {
+                        "src": "img/github.svg",
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random":false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+
+</html>

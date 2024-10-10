@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空商场 Starry Sky Mall - 用户注册</title>
+    <style>
+        /* Your existing CSS code */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #45678d;
+            background: -moz-linear-gradient(left, #5d9adf 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+            background: -webkit-linear-gradient(left, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+            background: linear-gradient(to right, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+            position: relative;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            top: 0;
+            left: 0;
+        }
+
+        .header {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+
+        .nav a:hover {
+            background-color: #555;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .face-recognition-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .face-recognition-circle {
+            width: 300px;
+            height: 300px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            height: calc(100vh - 40px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-60px); /* 向上移动60px */
+            position: relative;
+            z-index: 1;
+        }
+
+        .panda {
+            position: relative;
+            width: 200px;
+        }
+
+        .face {
+            width: 200px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 100%;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .ear {
+            width: 70px;
+            height: 70px;
+            background-color: #000;
+            border-radius: 100%;
+            position: absolute;
+            top: -10px;
+        }
+
+        .ear.right {
+            right: 0;
+        }
+
+        .eye-shadow {
+            width: 50px;
+            height: 80px;
+            background-color: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+        }
+
+        .eye-shadow.left {
+            transform: rotate(45deg);
+            left: 30px;
+        }
+
+        .eye-shadow.right {
+            transform: rotate(-45deg);
+            right: 30px;
+        }
+
+        .eye-white {
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border-radius: 100%;
+            position: absolute;
+            top: 68px;
+        }
+
+        .eye-white.left {
+            left: 38px;
+        }
+
+        .eye-white.right {
+            right: 38px;
+        }
+
+        .eye-ball {
+            width: 20px;
+            height: 20px;
+            background-color: #000;
+            border-radius: 100%;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+        }
+
+        .nose {
+            width: 35px;
+            height: 20px;
+            background-color: #000;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            bottom: 65px;
+            border-radius: 42px 42px 60px 60px / 30px 30px 60px 60px;
+        }
+
+        .mouth {
+            width: 68px;
+            height: 25px;
+            border-bottom: 7px solid #000;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            bottom: 35px;
+        }
+
+        .body {
+            width: 250px;
+            height: 280px;
+            background-color: #fff;
+            position: relative;
+            left: -25px;
+            top: -50px;
+            border-radius: 100px 100px 100px 100px / 126px 126px 96px 96px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .hand,
+        .hand::before,
+        .hand::after {
+            width: 40px;
+            height: 30px;
+            background-color: #000;
+            border-radius: 50px;
+            position: absolute;
+            top: 70px;
+            left: -20px;
+        }
+
+        .hand::before {
+            content: "";
+            top: 16px;
+            left: 0;
+        }
+
+        .hand::after {
+            content: "";
+            top: 32px;
+            left: 0;
+        }
+
+        .hand.right {
+            right: -20px;
+            left: auto;
+        }
+
+        .login-box {
+            width: 450px;
+            height: 550px; /* 放大注册框 */
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -240px); /* 向上移动更多 */
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: 0.3s;
+        }
+
+        h1 {
+            color: #7ec8e3;
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+
+
+        .ipt-box {
+            width: 80%;
+            margin-top: 25px;
+            position: relative;
+        }
+
+        .ipt-box input,
+        .ipt-box select {
+            width: 100%;
+            height: 35px;
+            border: none;
+            border-bottom: 1px solid #bbb;
+            text-indent: 5px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .ipt-box label {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            font-size: 14px;
+            color: #888;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        .ipt-box input:focus,
+        .ipt-box input:valid,
+        .ipt-box select:focus,
+        .ipt-box select:valid {
+            border-color: #7ec8e3;
+            box-shadow: 0 1px #7ec8e3;
+        }
+
+        .ipt-box input:focus ~ label,
+        .ipt-box input:valid ~ label,
+        .ipt-box select:focus ~ label,
+        .ipt-box select:valid ~ label {
+            color: #7ec8e3;
+            font-size: 12px;
+            transform: translateY(-15px);
+        }
+
+        button {
+            width: 150px;
+            height: 40px;
+            background-color: #7ec8e3;
+            border: none;
+            border-radius: 3px;
+            margin-top: 30px;
+            color: #fff;
+            letter-spacing: 10px;
+            text-indent: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            letter-spacing: 25px;
+            text-indent: 25px;
+            background-color: #5ab2d6;
+        }
+
+        .up {
+            transform: translate(-50%, -280px);
+        }
+    </style>
+</head>
+<body>
+<div id="particles-js"></div>
+<div class="header">
+    <h1>星空商场 Starry Sky Mall</h1>
+</div>
+<div class="nav">
+    <a href="/Commodity/">查看商品</a>
+    <a href="/face/" onclick="showFaceRecognition()">人脸识别</a>
+    <a href="/jf_Commodity/" class="active">积分商城</a>
+    <a href="/discount/">优惠活动</a>
+</div>
+<div class="content">
+    <div class="face-recognition-container">
+        <div class="face-recognition-circle">
+            <p>在该区域内显示用户人脸</p>
+        </div>
+        <p>识别中......</p>
+        <a href="#" class="back-button" onclick="goBack()">返回</a>
+    </div>
+</div>
+<div class="container">
+    <div class="panda">
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+        <div class="face">
+            <div class="eye-shadow left"></div>
+            <div class="eye-white left">
+                <div class="eye-ball"></div>
+            </div>
+            <div class="eye-shadow right"></div>
+            <div class="eye-white right">
+                <div class="eye-ball"></div>
+            </div>
+            <div class="nose"></div>
+            <div class="mouth"></div>
+        </div>
+        <div class="body"></div>
+        <div class="foot left">
+            <div class="sole"></div>
+        </div>
+        <div class="foot right">
+            <div class="sole"></div>
+        </div>
+    </div>
+    <div class="login-box">
+        <div class="hand left"></div>
+        <div class="hand right"></div>
+        <h1>用户注册</h1>
+
+
+        <div class="ipt-box">
+            <input type="text" class="username" name="username" required>
+            <label>用户名</label>
+        </div>
+        <div class="ipt-box">
+            <input type="tel" class="tel" name="tel" required>
+            <label>电话号码</label>
+        </div>
+        <div class="ipt-box">
+            <input type="password" class="password" name="password" required>
+            <label>密码</label>
+        </div>
+        <div class="ipt-box">
+            <select name="gender" class="gender" required>
+                <option value=0>男</option>
+                <option value=1>女</option>
+            </select>
+            <label>性别</label>
+        </div>
+        <div class="ipt-box">
+            <input type="number" class="age" name="age" required>
+            <label>年龄</label>
+        </div>
+        <div class="ipt-box">
+            <select name="view_difficult" class="view_difficult" required>
+                <option value=0>是</option>
+                <option value=1>否</option>
+            </select>
+            <label>是否视障</label>
+        </div>
+        <button type="submit" class="music-qd button">注册</button>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#confirm-password').focusin(function () {
+            $('.login-box').addClass('up');
+        }).focusout(function () {
+            $('.login-box').removeClass('up');
+        });
+
+        $(document).on('mousemove', function (e) {
+            let dw = $(document).width() / 10;
+            let dh = $(document).height() / 18;
+            let x = e.pageX / dw;
+            let y = e.pageY / dh;
+            $('.eye-ball').css({
+                left: x,
+                top: y
+            });
+        });
+
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 100,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#ffffff"
+                },
+                shape: {
+                    type: "circle",
+                    stroke: {
+                        width: 0,
+                        color: "#000000"
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    },
+                    image: {
+                        src: "img/github.svg",
+                        width: 100,
+                        height: 100
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "repulse"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 400,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+      $('.music-qd').click(function () {
+        var username = $('.username').val();
+        var password = $('.password').val();
+        var tel = $('.tel').val();
+        var gender = $('.gender').val();
+        var age = $('.age').val();
+        var view_difficult = $('.view_difficult').val();
+        var csrf = $("input[name='csrfmiddlewaretoken']").val();
+
+        if (username == '') {
+            alert('请输入用户名');
+            //  $('.inputname').next().text("请输入账号").css("color","red");
+            // return false
+        } else if (password == "") {
+            alert('请输入密码')
+            //  $('.mima').next().text("请输入密码").css("color","red");
+            // return false
+        } else {
+            var from_data = {
+                "username": username,
+                "password": password,
+                "tel": tel,
+                "gender": gender,
+                "age": age,
+                "view_difficult": view_difficult,
+                "Consumption_frequency": 0,
+                "fen": 0,
+
+                "csrfmiddlewaretoken": csrf
+            };
+            console.log(from_data)
+            //发送请求
+            $.post('/reg/', from_data, function (data) {
+                if (data.code == 1) {
+                    window.location.href = data.url
+                } else {
+                    //console.log(99)
+                    //console.log(data.msg)
+                    alert(data.msg)
+                }
+
+
+            })
+        }
+
+        // }
+
+
+    })
+
+    });
+</script>
+</body>
+</html>

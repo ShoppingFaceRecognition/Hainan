@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Sky Mall - Logout Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            margin: 0;
+            padding: 0;
+            user-select: none; /* 禁止选择文字 */
+        }
+        /* 粒子背景 */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .message {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #555;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .image-container img {
+            width: 45%;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .image-container img:hover {
+            transform: scale(1.1);
+        }
+        .fullscreen-img {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: auto;
+            height: auto;
+            max-width: 90%;
+            max-height: 90%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            display: none;
+        }
+        .fullscreen-img.active {
+            display: block;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            display: none;
+        }
+        .overlay.active {
+            display: block;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script>
+        function confirmLogout() {
+            document.getElementById('logout-confirmation').style.display = 'none';
+            document.getElementById('logout-end').style.display = 'block';
+        }
+
+        function cancelLogout() {
+            document.getElementById('logout-confirmation').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function showLogoutConfirmation(event) {
+            event.preventDefault(); // 阻止默认行为
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('logout-confirmation').style.display = 'block';
+        }
+
+        function toggleFullscreen(img) {
+            const fullscreenImg = document.getElementById('fullscreen-img');
+            const overlay = document.getElementById('overlay');
+
+            if (fullscreenImg.classList.contains('active')) {
+                fullscreenImg.classList.remove('active');
+                overlay.classList.remove('active');
+                fullscreenImg.style.display = 'none';
+            } else {
+                fullscreenImg.src = img.src;
+                fullscreenImg.classList.add('active');
+                overlay.classList.add('active');
+                fullscreenImg.style.display = 'block';
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        },
+                        "image": {
+                            "src": "img/github.svg",
+                            "width": 100,
+                            "height": 100
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 6,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "repulse"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 400,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
+</head>
+<body>
+    <script src="../../static/js/background.js"></script>
+    <div id="particles-js"></div>
+    <div class="header">
+        星空商场 Starry Sky Mall
+    </div>
+    <div class="navbar">
+        <a href="/Commodity/">查看商品</a>
+        <a href="/face/">人脸识别</a>
+        <a href="/jf_Commodity/">积分商城</a>
+        <a href="/discount/">优惠活动</a>
+    </div>
+    <div class="container" id="main-content" style="display: block;">
+        <!-- 主内容区 -->
+        <div class="message">
+            欢迎来到星空商场！
+        </div>
+        <div class="image-container">
+            <img src="../../static/img/discount.png" alt="Example Image" onclick="toggleFullscreen(this)">
+            <img src="../../static/img/discount2.png" alt="Example Image" onclick="toggleFullscreen(this)">
+        </div>
+        <button><a href="/">返回</a> </button>
+    </div>
+    <div id="overlay" class="overlay" onclick="toggleFullscreen()"></div>
+    <img id="fullscreen-img" class="fullscreen-img" onclick="toggleFullscreen()">
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Sky Mall - Logout Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            margin: 0;
+            padding: 0;
+            user-select: none; /* 禁止选择文字 */
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .message {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #555;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .image-container img {
+            width: 45%;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .image-container img:hover {
+            transform: scale(1.1);
+        }
+        .fullscreen-img {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: auto;
+            height: auto;
+            max-width: 90%;
+            max-height: 90%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            display: none;
+        }
+        .fullscreen-img.active {
+            display: block;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            display: none;
+        }
+        .overlay.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function confirmLogout() {
+            document.getElementById('logout-confirmation').style.display = 'none';
+            document.getElementById('logout-end').style.display = 'block';
+        }
+
+        function cancelLogout() {
+            document.getElementById('logout-confirmation').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function showLogoutConfirmation(event) {
+            event.preventDefault(); // 阻止默认行为
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('logout-confirmation').style.display = 'block';
+        }
+
+        function toggleFullscreen(img) {
+            const fullscreenImg = document.getElementById('fullscreen-img');
+            const overlay = document.getElementById('overlay');
+
+            if (fullscreenImg.classList.contains('active')) {
+                fullscreenImg.classList.remove('active');
+                overlay.classList.remove('active');
+                fullscreenImg.style.display = 'none';
+            } else {
+                fullscreenImg.src = img.src;
+                fullscreenImg.classList.add('active');
+                overlay.classList.add('active');
+                fullscreenImg.style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        星空商场 Starry Sky Mall
+    </div>
+    <div class="navbar">
+        <a href="../shopping.html">查看商品</a>
+        <a href="face.html">人脸识别</a>
+        <a href="integration.html">积分商城</a>
+        <a href="discount.html">优惠活动</a>
+    </div>
+    <div class="container" id="main-content" style="display: block;">
+        <!-- 主内容区 -->
+        <div class="message">
+            欢迎来到星空商场！
+        </div>
+        <div class="image-container">
+            <img src="../../static/img/discount.png" alt="Example Image" onclick="toggleFullscreen(this)">
+            <img src="../../static/img/discount2.png" alt="Example Image" onclick="toggleFullscreen(this)">
+        </div>
+    </div>
+    <div id="overlay" class="overlay" onclick="toggleFullscreen()"></div>
+    <img id="fullscreen-img" class="fullscreen-img" onclick="toggleFullscreen()">
+</body>
+</html>

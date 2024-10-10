@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Sky Mall - Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: purple;
+        }
+        .order-details {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .order-details p {
+            margin: 10px 0;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        .buttons button:hover {
+            background-color: #555;
+        }
+        .back-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <script src="../../static/js/background.js"></script>
+    <div class="header">
+        星空商场 Starry Sky Mall
+    </div>
+    <div class="navbar">
+        <a href="../shopping.html">查看商品</a>
+        <a href="integration.html">积分商城</a>
+        <a href="discount.html">优惠活动</a>
+        <a href="logout.html">退出登录</a>
+    </div>
+    <div class="container">
+        <div class="title">
+            您已成功下单
+        </div>
+        <div class="order-details">
+            <p>您购买的商品是：<span id="product-names">A, B, C 和 D</span></p>
+            <p>总计: ¥<span id="total-price">XXX.00</span></p>
+            <p>请前往商城出口查看领取商品并完成支付。</p>
+        </div>
+        <div class="buttons">
+            <button onclick="goBack()">返回</button>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        // 模拟从购物车页面传递过来的数据
+        const products = ['A', 'B', 'C', 'D'];
+        const totalPrice = 500.00;  // 这里的总价需要根据实际购物车计算
+
+        // 更新页面显示
+        document.getElementById('product-names').textContent = products.join(', ');
+        document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+
+        // Add active class to the current button (highlight it)
+        var navbar = document.querySelector('.navbar');
+        var links = navbar.getElementsByTagName('a');
+        for (var i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function() {
+                var current = document.getElementsByClassName('active');
+                if (current.length > 0) { 
+                    current[0].className = current[0].className.replace(' active', '');
+                }
+                this.className += ' active';
+            });
+        }
+    </script>
+</body>
+</html>

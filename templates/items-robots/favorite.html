@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Sky Mall - Shopping List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #444;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 18px;
+            color: purple;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-item {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            margin: 10px 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-item img {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            margin-right: 20px;
+        }
+
+        .product-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product-details p {
+            margin: 5px 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .buttons button:hover {
+            background-color: #555;
+        }
+
+        .back-button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+<script src="../../static/js/background.js"></script>
+<div class="header">
+    星空商场 Starry Sky Mall
+</div>
+<div class="navbar">
+    <a href="/Commodity">查看商品</a>
+    <a href="/jf_Commodity" class="active">积分商城</a>
+    <a href="/discount=">优惠活动</a>
+    <a href="/logout">退出登录</a>
+</div>
+<div class="container">
+    <div class="product-list">
+        {% for favorite in favorites %}
+        <div class="product-item">
+            <img src="{{ favorite.product.img.url }}" alt="Product Image">
+            <div class="product-details">
+                <p>{{ favorite.product.name }}</p>
+                <p>价格: ¥<span class="price">{{ favorite.product.price }}</span></p>
+                <form method="post" action="{% url 'remove_favorite' favorite.product.id %}">
+                    {% csrf_token %}
+                    <button type="submit">移出收藏</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="buttons">
+        <button onclick="goBack()">返回</button>
+        <button onclick="location.href='shopping_cart.html'">查看购物车</button>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    // Add active class to the current button (highlight it)
+    var navbar = document.querySelector('.navbar');
+    var links = navbar.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', function () {
+            var current = document.getElementsByClassName('active');
+            if (current.length > 0) {
+                current[0].className = current[0].className.replace(' active', '');
+            }
+            this.className += ' active';
+        });
+    }
+</script>
+</body>
+</html>
