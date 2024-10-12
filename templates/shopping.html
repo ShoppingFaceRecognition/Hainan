@@ -191,17 +191,17 @@
 <body>
 <script src="../../static/js/background.js"></script>
 <div class="header">
-    星空商场 Starry Sky Mall
+     Starry Sky Mall
 </div>
 <div class="top-buttons">
-    <a href="/Commodity/">查看商品</a>
-    <a href="/jf_Commodity/">积分商城</a>
-    <a href="/discount/">优惠活动</a>
-    <a href="/logout/">退出登录</a>
+    <a href="/Commodity/">View Products</a>
+    <a href="/jf_Commodity/">Points Mall</a>
+    <a href="/discount/">Promotional Activities</a>
+    <a href="/logout/">Log Out</a>
 </div>
 <div class="container">
     <div class="search-bar">
-        <input type="text" placeholder="搜索商品...">
+        <input type="text" placeholder="Product Search...">
     </div>
     <div class="products" id="products">
         {% for com in commodity %}
@@ -220,8 +220,8 @@
         {% endfor %}
     </div>
     <div class="buttons">
-        <button onclick="location.href='/cart'">查看购物车</button>
-        <button onclick="location.href='/favorite_list/'">查看收藏夹</button>
+        <button onclick="location.href='/cart'">View Cart</button>
+        <button onclick="location.href='/favorite_list/'"> View Favorites</button>
     </div>
 </div>
 
