@@ -40,7 +40,8 @@ urlpatterns = [
     path('jf_Commodity/', views.jf_commodity_list, name='jf_commodity_list'),
     path('jf_commodity/exchange/<int:product_id>/', views.exchange_product, name='exchange_product'),
     path('addcart/', views.addcart),
-    path('cart/', views.cart)
+    path('cart/', views.cart),
+    path('face_recognition_result/', views.face_recognition_result, name='face_recognition_result'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

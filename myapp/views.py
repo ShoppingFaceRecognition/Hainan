@@ -6,10 +6,12 @@ from .models import Commodity, Favorite, Cart
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
-from .models import  jf_Commodity, ExchangeHistory
+from .models import jf_Commodity, ExchangeHistory
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Commodity, User, Cart
+
+from myapp.model.MAN import main
 
 
 # Create your views here.
@@ -54,11 +56,11 @@ def exchange(request):
 
 def logined(request):
     user_id = request.session.get('user_id')
-    user=User.objects.get(id=user_id)
-    context={
-        'user':user
+    user = User.objects.get(id=user_id)
+    context = {
+        'user': user
     }
-    return render(request, 'items-robots/logined.html',context=context)
+    return render(request, 'items-robots/logined.html', context=context)
 
 
 class Login(View):
@@ -274,6 +276,7 @@ def addcart(request):
         # 捕获所有异常，并返回错误信息
         return JsonResponse({'status': 'error', 'message': str(e)})
 
+
 def cart(request):
     user_id = request.session.get('user_id')
     if not user_id:
@@ -285,3 +288,17 @@ def cart(request):
         'cart': cart
     }
     return render(request, 'items-robots/shopping_cart.html', context)
+
+
+# 人脸识别
+def face_recognition_result(request):
+    # 假设后端通过摄像头捕获到人脸识别结果并返回图像和用户信息
+    path, name, gender, age = main()
+    face_recognition_data = {
+        'status': 'success',
+        'image_url': path,  # 这个 URL 需要指向静态文件或媒体文件
+        'username': name,
+        'phone': '123****5678'
+    }
+
+    return JsonResponse(face_recognition_data)

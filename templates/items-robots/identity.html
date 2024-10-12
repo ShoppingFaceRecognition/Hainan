@@ -124,9 +124,9 @@
         <a href="/logout/">退出登录</a>
     </div>
     <div class="container">
-        <div class="title">确认人脸</div>
+        <div class="title">确认您的个人信息</div>
         <div class="result">
-            <img src="#" alt="扫描人像">
+            <img id="face-image" src="/media/images/commodity/result.jpg" alt="扫描人像">
             <div class="result-info">
                 <p>用户名: 测试用户</p>
                 <p>手机号: 123****5678</p>
@@ -138,7 +138,7 @@
             <button onclick="retry()">不是, 重新扫描</button>
             <button onclick="register()">不是, 注册会员</button>
         </div>
-        <a href="#" class="back-button">返回</a>
+        <a href="/face/" class="back-button">返回</a>
     </div>
 
     <script>
@@ -173,6 +173,24 @@
                 this.className += ' active';
             });
         }
+
+        function fetchFaceRecognitionResult() {
+            fetch('/face_recognition_result/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // 更新用户名和手机号
+                        document.getElementById('username').textContent = '用户名: ' + data.username;
+                        document.getElementById('phone').textContent = '手机号: ' + data.phone;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching face recognition data:', error);
+                });
+        }
+
+        // 页面加载完毕后自动调用
+        window.onload = fetchFaceRecognitionResult;
     </script>
 </body>
 </html>
