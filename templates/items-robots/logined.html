@@ -123,13 +123,13 @@
 <body>
     <script src="../../static/js/background.js"></script>
     <div class="header">
-        星空商场 Starry Sky Mall
+         Starry Sky Mall
     </div>
     <div class="navbar">
-        <a href="/Commodity" id="view-products-nav">查看商品</a>
-        <a href="/jf_Commodity" class="active">积分商城</a>
-        <a href="/discount">优惠活动</a>
-        <a href="/longout">退出登录</a>
+        <a href="/Commodity" id="view-products-nav">View Products</a>
+        <a href="/jf_Commodity" class="active">Points Mall</a>
+        <a href="/discount">Promotional Activities</a>
+        <a href="/longout">Log Out</a>
     </div>
     <div class="container">
         <div class="title">
@@ -137,28 +137,28 @@
         <div class="profile">
             <img src="{{user.face_img_path}}" alt="用户头像">
             <div class="profile-info">
-                <p>用户名：{{ user.username }}</p>
-                <p>积分：{{ user.fen }}</p>
+                <p>Username：{{ user.username }}</p>
+                <p>Points：{{ user.fen }}</p>
 {#                <div>#}
-{#                    <p>优惠券：</p>#}
+{#                    <p>Coupon：</p>#}
 {#                    <div class="coupons">#}
-{#                        <div class="coupon">优惠券 1</div>#}
-{#                        <div class="coupon">优惠券 2</div>#}
-{#                        <div class="coupon">优惠券 3</div>#}
+{#                        <div class="coupon">Coupon 1</div>#}
+{#                        <div class="coupon">Coupon 2</div>#}
+{#                        <div class="coupon">Coupon 3</div>#}
 {#                    </div>#}
 {#                </div>#}
-                <p>本月消费次数：{{ user.Consumption_frequency }}</p>
+                <p>Purchases Made This Month：{{ user.Consumption_frequency }}</p>
 
             </div>
         </div>
         <div class="buttons">
-            <button onclick="goBack()">返回</button>
-            <button onclick="viewProducts()">查看商品</button>
-            <button>修改资料</button>
-            <button>积分商城</button>
+            <button onclick="goBack()">return</button>
+            <button onclick="viewProducts()">View Products</button>
+            <button> Edit Profile</button>
+            <button>Points Mall</button>
         </div>
     </div>
-    <a href="#" class="back-button">返回</a>
+    <a href="#" class="back-button">return</a>
 
     <script>
         function goBack() {
