@@ -223,20 +223,20 @@
 <div id="particles-js"></div>
 
 <div class="header">
-    星空商场 Starry Sky Mall
+     Starry Sky Mall
 </div>
 <div class="navbar">
-    <a href="/Commodity/">查看商品</a>
-    <a href="/face/">人脸识别</a>
-    <a href="/jf_Commodity/">积分商城</a>
-    <a href="/discount/">优惠活动</a>
+    <a href="/Commodity/">View Products</a>
+    <a href="/face/">Face Recognition</a>
+    <a href="/jf_Commodity/">Points Mall</a>
+    <a href="/discount/">Promotional Activities</a>
 </div>
 <div class="container">
     <div class="profile">
         <img src="{{ user.face_img_path }}" alt="用户头像">
         <div class="profile-info">
-            <p>用户：{{ user.username }}</p>
-            <p>总积分：{{ user.fen }}</p>
+            <p>Username：{{ user.username }}</p>
+            <p>Total Points：{{ user.fen }}</p>
         </div>
     </div>
 
@@ -245,7 +245,7 @@
         <span onclick="currentSlide(1)"></span>
         <span onclick="currentSlide(2)"></span>
     </div>
-    <div class="title" style="margin-top: 40px;">商品兑换</div>
+    <div class="title" style="margin-top: 40px;">Reward Redemption</div>
     <div class="products-container draggable-container">
         {% for foo in jf_commodity %}
             <div class="product">
@@ -254,12 +254,12 @@
                 <p>{{ foo.price }}</p>
                 <form method="post" action="{% url 'exchange_product' foo.id %}">
                     {% csrf_token %}
-                    <button type="submit">兑换</button>
+                    <button type="submit">Redemption</button>
                 </form>
             </div>
         {% endfor %}
     </div>
-    <a onclick="goBack()" class="back-button">返回</a>
+    <a onclick="goBack()" class="back-button">return</a>
 </div>
 
 <script>
