@@ -115,30 +115,30 @@
 <body>
     <script src="../../static/js/background.js"></script>
     <div class="header">
-        星空商场 Starry Sky Mall
+         Starry Sky Mall
     </div>
     <div class="navbar">
-        <a href="/Commodity/">查看商品</a>
-        <a href="/jf_Commodity/" class="active">积分商城</a>
-        <a href="/discount/">优惠活动</a>
-        <a href="/logout/">退出登录</a>
+        <a href="/Commodity/">View Products</a>
+        <a href="/jf_Commodity/" class="active">Points Mall</a>
+        <a href="/discount/">Promotional Activities</a>
+        <a href="/logout/">Log Out</a>
     </div>
     <div class="container">
-        <div class="title">确认您的个人信息</div>
+        <div class="title">Please confirm your personal information</div>
         <div class="result">
             <img id="face-image" src="/media/images/commodity/result.jpg" alt="扫描人像">
             <div class="result-info">
-                <p>用户名: 测试用户</p>
-                <p>手机号: 123****5678</p>
+                <p>Username: Test User</p>
+                <p>Phone Number: 123****5678</p>
             </div>
         </div>
-        <div class="title">这是您的账号吗?</div>
+        <div class="title">Is this your account?</div>
         <div class="buttons">
-            <button onclick="confirm()">是</button>
-            <button onclick="retry()">不是, 重新扫描</button>
-            <button onclick="register()">不是, 注册会员</button>
+            <button onclick="confirm()">Yes</button>
+            <button onclick="retry()">No,Rescan</button>
+            <button onclick="register()">No, Register as Member</button>
         </div>
-        <a href="/face/" class="back-button">返回</a>
+        <a href="/face/" class="back-button">return</a>
     </div>
 
     <script>
@@ -180,8 +180,8 @@
                 .then(data => {
                     if (data.status === 'success') {
                         // 更新用户名和手机号
-                        document.getElementById('username').textContent = '用户名: ' + data.username;
-                        document.getElementById('phone').textContent = '手机号: ' + data.phone;
+                        document.getElementById('username').textContent = 'Username: ' + data.username;
+                        document.getElementById('phone').textContent = 'Phone Number: ' + data.phone;
                     }
                 })
                 .catch(error => {
