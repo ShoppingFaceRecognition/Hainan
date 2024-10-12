@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>星空商场 Starry Sky Mall - 用户注册</title>
+    <title> Starry Sky Mall - User Registration</title>
     <style>
         /* Your existing CSS code */
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap');
@@ -351,20 +351,20 @@
 <body>
 <div id="particles-js"></div>
 <div class="header">
-    <h1>星空商场 Starry Sky Mall</h1>
+    <h1> Starry Sky Mall</h1>
 </div>
 <div class="nav">
-    <a href="/Commodity/">查看商品</a>
-    <a href="/face/" onclick="showFaceRecognition()">人脸识别</a>
-    <a href="/jf_Commodity/" class="active">积分商城</a>
-    <a href="/discount/">优惠活动</a>
+    <a href="/Commodity/">View Products</a>
+    <a href="/face/" onclick="showFaceRecognition()">Face Recognition</a>
+    <a href="/jf_Commodity/" class="active"> Points Mall</a>
+    <a href="/discount/">Promotional Activities</a>
 </div>
 <div class="content">
     <div class="face-recognition-container">
         <div class="face-recognition-circle">
-            <p>在该区域内显示用户人脸</p>
+            <p>Display the User's Face in This Area</p>
         </div>
-        <p>识别中......</p>
+        <p> Recognizing......</p>
         <a href="#" class="back-button" onclick="goBack()">返回</a>
     </div>
 </div>
@@ -395,40 +395,40 @@
     <div class="login-box">
         <div class="hand left"></div>
         <div class="hand right"></div>
-        <h1>用户注册</h1>
+        <h1>User Registration</h1>
 
 
         <div class="ipt-box">
             <input type="text" class="username" name="username" required>
-            <label>用户名</label>
+            <label>Username</label>
         </div>
         <div class="ipt-box">
             <input type="tel" class="tel" name="tel" required>
-            <label>电话号码</label>
+            <label>Phone Number</label>
         </div>
         <div class="ipt-box">
             <input type="password" class="password" name="password" required>
-            <label>密码</label>
+            <label>Password</label>
         </div>
         <div class="ipt-box">
             <select name="gender" class="gender" required>
-                <option value=0>男</option>
-                <option value=1>女</option>
+                <option value=0>Male</option>
+                <option value=1>Female</option>
             </select>
-            <label>性别</label>
+            <label>Gender</label>
         </div>
         <div class="ipt-box">
             <input type="number" class="age" name="age" required>
-            <label>年龄</label>
+            <label>Age</label>
         </div>
         <div class="ipt-box">
             <select name="view_difficult" class="view_difficult" required>
-                <option value=0>是</option>
-                <option value=1>否</option>
+                <option value=0>Yes</option>
+                <option value=1>No</option>
             </select>
-            <label>是否视障</label>
+            <label>Visually Impaired or Not</label>
         </div>
-        <button type="submit" class="music-qd button">注册</button>
+        <button type="submit" class="music-qd button">Register</button>
 
     </div>
 </div>
@@ -575,12 +575,12 @@
         var csrf = $("input[name='csrfmiddlewaretoken']").val();
 
         if (username == '') {
-            alert('请输入用户名');
-            //  $('.inputname').next().text("请输入账号").css("color","red");
+            alert('Please Enter Your Username');
+            //  $('.inputname').next().text("Please Enter Your Account").css("color","red");
             // return false
         } else if (password == "") {
-            alert('请输入密码')
-            //  $('.mima').next().text("请输入密码").css("color","red");
+            alert('Please Enter Your Password')
+            //  $('.mima').next().text("Please Enter Your Password").css("color","red");
             // return false
         } else {
             var from_data = {
