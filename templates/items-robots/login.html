@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>星空商场 Starry Sky Mall - 用户登录</title>
+    <title> Starry Sky Mall - User Login</title>
     <style>
         /* Your existing CSS code */
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap');
@@ -350,21 +350,21 @@
 <body>
 <div id="particles-js"></div>
 <div class="header">
-    <h1>星空商场 Starry Sky Mall</h1>
+    <h1> Starry Sky Mall</h1>
 </div>
 <div class="nav">
-    <a href="/Commodity/">查看商品</a>
-    <a href="/face/" onclick="showFaceRecognition()">人脸识别</a>
-    <a href="/jf_Commodity/" class="active">积分商城</a>
-    <a href="/discount/">优惠活动</a>
+    <a href="/Commodity/">View Products</a>
+    <a href="/face/" onclick="showFaceRecognition()">Face Recognition</a>
+    <a href="/jf_Commodity/" class="active">Points Mall</a>
+    <a href="/discount/">Promotional Activities</a>
 </div>
 <div class="content">
     <div class="face-recognition-container">
         <div class="face-recognition-circle">
-            <p>在该区域内显示用户人脸</p>
+            <p>Display the User's Face in This Area</p>
         </div>
-        <p>识别中......</p>
-        <a href="#" class="back-button" onclick="goBack()">返回</a>
+        <p>Recognizing......</p>
+        <a href="#" class="back-button" onclick="goBack()">return</a>
     </div>
 </div>
 <div class="container">
@@ -394,22 +394,22 @@
     <div class="login-box">
         <div class="hand left"></div>
         <div class="hand right"></div>
-        <h1>用户登录</h1>
+        <h1>User Login</h1>
 
 
         <div class="ipt-box">
             <input type="text" class="username" name="username" required>
-            <label>用户名</label>
+            <label>Username</label>
         </div>
 
         <div class="ipt-box">
             <input type="password" class="password" name="password" required>
-            <label>密码</label>
+            <label>Password</label>
         </div>
 
-        <button type="submit" class="music-qd button">登录</button>
+        <button type="submit" class="music-qd button">Sign In</button>
 
-    <button onclick="location.href='/reg/'">注册</button>
+    <button onclick="location.href='/reg/'">Registe</button>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
@@ -550,11 +550,11 @@
             var pwd = $('.password').val();
             var csrf = $("input[name='csrfmiddlewaretoken']").val();
             if (username == '') {
-                $('.username').next().text("请输入账号").css("color", "red");
+                $('.username').next().text("Please Enter Your Account").css("color", "red");
                 return false
             } else if (pwd == "") {
-                // alert('请输入密码')
-                $('.password').next().text("请输入密码").css("color", "red");
+                // alert('Please Enter Your Password')
+                $('.password').next().text("Please Enter Your Password").css("color", "red");
                 return false
             } else {
 
