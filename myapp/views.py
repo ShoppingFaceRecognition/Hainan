@@ -78,7 +78,7 @@ class Login(View):
         request.session['username'] = user.username
         request.session['user_id'] = user.id
         request.session.set_expiry(60 * 60 * 24)
-        return JsonResponse({'code': 1, 'msg': '登录成功', 'url': '/logined', "username": username, 'password': password})
+        return JsonResponse({'code': 1, 'msg': '登录成功', 'url': '/login', "username": username, 'password': password})
 
 
 class Reg(View):
