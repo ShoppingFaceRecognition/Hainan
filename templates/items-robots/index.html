@@ -14,7 +14,7 @@
             background-color: #2b2b2b;
         }
 
-        /* 粒子背景 */
+        
         #particles-js {
             position: absolute;
             width: 100%;
@@ -22,7 +22,7 @@
             z-index: -1;
         }
 
-        /* 标题部分 */
+        
         .header {
             background-color: rgba(51, 51, 51, 0.8);
             color: white;
@@ -33,7 +33,7 @@
             z-index: 1;
         }
 
-        /* 导航栏 */
+        
         .nav {
             display: flex;
             justify-content: space-around;
@@ -54,7 +54,7 @@
             background-color: #555;
         }
 
-        /* 内容部分 */
+        
         .content {
             padding: 20px;
             text-align: center;
@@ -62,7 +62,7 @@
             z-index: 1;
         }
 
-        /* 轮播容器 */
+        
         .carousel-container {
             display: flex;
             justify-content: center;
@@ -145,7 +145,7 @@
             right: 0;
         }
 
-        /* 地图部分 */
+        
         .map-container {
             display: flex;
             justify-content: center;
@@ -172,15 +172,15 @@
 
 <body>
 
-    <!-- 粒子背景 -->
+    <!-- Particle Background -->
     <div id="particles-js"></div>
 
-    <!-- 标题部分 -->
+    <!-- Header Section -->
     <div class="header">
         <h1> Starry Sky Mall</h1>
     </div>
 
-    <!-- 导航栏 -->
+    <!-- Navigation Bar -->
     <div class="nav">
         <a href="Commodity/">View Products</a>
         <a href="face/">Face Recognition</a>
@@ -188,17 +188,17 @@
         <a href="discount/">Promotional Activities</a>
     </div>
 
-    <!-- 商品部分 -->
+    <!-- Product Section -->
     <div id="products" class="content active">
-        <!-- 轮播容器 -->
+        <!-- Carousel Container -->
         <div class="carousel-container">
             <ul id="banner"></ul>
         </div>
-        <!-- 轮播圆点 -->
+        <!-- Carousel Dots -->
         <div class="carousel-dots" id="carousel-dots"></div>
     </div>
 
-    <!-- 地图部分 -->
+    <!-- Map Section -->
     <div class="map-container">
         <img src="/static/img/6.jpg" alt="商场地图" onclick="toggleZoom(this)">
     </div>
