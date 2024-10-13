@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>星空商城 Starry Sky Mall</title>
+    <title>Starry Sky Mall</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -96,27 +96,27 @@
 <body>
     <script src="../../static/js/background.js"></script>
     <div class="header">
-        星空商城 Starry Sky Mall
+        Starry Sky Mall
     </div>
     <div class="navbar">
-        <a href="/Commodity/">查看商品</a>
-        <a href="/static/ai_guodo.html">识别中的页面</a>
-        <a href="/jf_Commodity/">积分商城</a>
-        <a href="/discount/">优惠活动</a>
+        <a href="/Commodity/">View Products</a>
+        <a href="/static/ai_guodo.html">Page under recognition</a>
+        <a href="/jf_Commodity/">Points Mall</a>
+        <a href="/discount/">Promotional Activities</a>
     </div>
     <div class="container">
         <div class="message">
-            点击"开启摄像头"后，<br>
-            在以下圆内显示摄像头画面。
+            After clicking 'Enable Camera'，<br>
+            Display the camera feed within the following circle.
         </div>
         <div class="circle">
             <video id="video" autoplay playsinline></video>
         </div>
         <div id="errorMessage" class="error-message" style="display: none;"></div>
-        <button id="startCamera" class="button">开启摄像头</button>
-        <a href="/identity/" class="button">确认界面</a>
-        <a href="/login/" class="button">直接登录</a>
-        <a href="/" class="button">返回</a>
+        <button id="startCamera" class="button">Turn On Camera</button>
+        <a href="/identity/" class="button">Confirmation Interface</a>
+        <a href="/login/" class="button">Direct Login</a>
+        <a href="/" class="button">Return</a>
     </div>
     <script>
         const video = document.getElementById('video');
@@ -138,20 +138,20 @@
             } catch (err) {
                 console.error("Error accessing the camera: ", err);
                 if (err.name === 'NotAllowedError') {
-                    errorMessage.textContent = "请在浏览器设置中允许访问摄像头，然后刷新页面重试。";
+                    errorMessage.textContent = "Please allow camera access in your browser settings, then refresh the page and try again.";
                 } else if (err.name === 'NotFoundError') {
-                    errorMessage.textContent = "未找到摄像头设备，请确保您的设备有可用的摄像头。";
+                    errorMessage.textContent = "No camera device found. Please ensure your device has a functional camera.";
                 } else {
-                    errorMessage.textContent = "无法访问摄像头，请确保已授予权限并刷新页面重试。";
+                    errorMessage.textContent = "Unable to access the camera. Please ensure permission is granted and refresh the page to try again.";
                 }
                 errorMessage.style.display = 'block';
             }
         });
 
-        // 检查浏览器是否支持getUserMedia
+        // Check if the browser supports getUserMedia
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
             startCameraButton.disabled = true;
-            errorMessage.textContent = "您的浏览器不支持访问摄像头，请尝试使用最新版本的Chrome、Firefox或Safari浏览器。";
+            errorMessage.textContent = "Your browser does not support camera access. Please try using the latest version of Chrome, Firefox, or Safari.";
             errorMessage.style.display = 'block';
         }
     </script>
