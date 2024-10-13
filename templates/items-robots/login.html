@@ -109,7 +109,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transform: translateY(-60px); /* 向上移动60px */
+            transform: translateY(-60px); 
             position: relative;
             z-index: 1;
         }
@@ -255,14 +255,14 @@
 
         .login-box {
             width: 450px;
-            height: 550px; /* 放大注册框 */
+            height: 550px; 
             background-color: #fff;
             border-radius: 3px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -240px); /* 向上移动更多 */
+            transform: translate(-50%, -240px); 
             z-index: 2;
             display: flex;
             justify-content: center;
@@ -563,7 +563,7 @@
                     "password": pwd,
                     'csrfmiddlewaretoken': csrf
                 };
-                //发送请求
+                
                 $.post('/login/', form_data, function (data) {
                     if (data.code == 1) {
                         window.location.href = data.url
