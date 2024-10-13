@@ -9,11 +9,11 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            user-select: none; /* 禁止选择文字 */
-            background: linear-gradient(to right, #1e3c72, #2a5298); /* 设置背景渐变颜色 */
+            user-select: none; 
+            background: linear-gradient(to right, #1e3c72, #2a5298); 
         }
 
-        /* 粒子背景 */
+       
         #particles-js {
             position: fixed;
             width: 100%;
@@ -60,7 +60,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             position: relative;
-            z-index: 1; /* 使容器内容在粒子效果上方 */
+            z-index: 1; 
         }
 
         .profile {
@@ -172,7 +172,7 @@
             display: inline-block;
             margin-top: 20px;
             position: absolute;
-            bottom: -50px; /* 调整位置 */
+            bottom: -50px; 
             left: 20px;
         }
 
@@ -209,17 +209,17 @@
             display: flex;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* 隐藏滚动条 */
-            -ms-overflow-style: none; /* 隐藏滚动条 */
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
         }
 
         .draggable-container::-webkit-scrollbar {
-            display: none; /* 隐藏滚动条 */
+            display: none; 
         }
     </style>
 </head>
 <body>
-<!-- 粒子背景 -->
+<!-- Particle Background -->
 <div id="particles-js"></div>
 
 <div class="header">
@@ -317,7 +317,7 @@
     function currentSlide(n) {
         showSlides(slideIndex = n);
         const carousel = document.getElementById('carousel');
-        carousel.scrollLeft = slideIndex * (carousel.clientWidth / 3); // 根据实际显示的数量调整此值
+        carousel.scrollLeft = slideIndex * (carousel.clientWidth / 3); 
     }
 
     // Add active class to the current button (highlight it)
