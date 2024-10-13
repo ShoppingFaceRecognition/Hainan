@@ -183,7 +183,7 @@
                 <img src="{{ c.product.img.url }}" alt="Product Image">
                 <div class="cart-item-details">
                     <p>{{ c.product.name }}</p>
-                    <p>价格: ¥<span class="price">{{ c.product.price }}</span></p>
+                    <p>Price: ¥<span class="price">{{ c.product.price }}</span></p>
                     <div class="quantity-control">
                         <button onclick="updateQuantity(this, -1)">-</button>
                         <input type="text" value="1" readonly>
@@ -196,8 +196,8 @@
 
 
         <div class="summary">
-            <p>合计: ¥<span id="total-price">0.00</span></p>
-            <p>积分: ¥<span id="total-points">0.00</span></p>
+            <p>Total: ¥<span id="total-price">0.00</span></p>
+            <p>Points: ¥<span id="total-points">0.00</span></p>
         </div>
         <div class="buttons">
             <button onclick="goBack()">return</button>
