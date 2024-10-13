@@ -48,10 +48,10 @@ def load_known_faces_from_db():
     conn = pymysql.connect(**DB_CONFIG)
     try:
         with conn.cursor() as cursor:
-            cursor.execute("SELECT name, encoding FROM faces")
+            cursor.execute("SELECT user_name, encoding FROM faces")
             rows = cursor.fetchall()
             for row in rows:
-                name = row['name']
+                name = row['user_name']
                 encoding = pickle.loads(row['encoding'])
                 known_face_names.append(name)
                 known_face_encodings.append(encoding)

@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Commodity, User, Cart
 
-from myapp.model.MAN import main
+from myapp.model.Recognize import process_image
 
 
 # Create your views here.
@@ -80,7 +80,7 @@ class Login(View):
         request.session['username'] = user.username
         request.session['user_id'] = user.id
         request.session.set_expiry(60 * 60 * 24)
-        return JsonResponse({'code': 1, 'msg': '登录成功', 'url': '/login', "username": username, 'password': password})
+        return JsonResponse({'code': 1, 'msg': '登录成功', 'url': '/logined', "username": username, 'password': password})
 
 
 class Reg(View):
@@ -104,7 +104,7 @@ class Reg(View):
             # request.session['user_id']=u.id
             request.session.set_expiry(60 * 60 * 24)
             return JsonResponse(
-                {'code': 1, 'msg': '注册成功', 'url': '/logined', "username": username, 'password': password})
+                {'code': 1, 'msg': '注册成功', 'url': '/login', "username": username, 'password': password})
         except  Exception as e:
             return JsonResponse({'code': 0, 'msg': f'数据保存失败:{e}'})
 
@@ -293,7 +293,7 @@ def cart(request):
 # 人脸识别
 def face_recognition_result(request):
     # 假设后端通过摄像头捕获到人脸识别结果并返回图像和用户信息
-    path, name, gender, age = main()
+    path, name, gender, age = process_image('media/images/People/00.jpg')
     face_recognition_data = {
         'status': 'success',
         'image_url': path,  # 这个 URL 需要指向静态文件或媒体文件
