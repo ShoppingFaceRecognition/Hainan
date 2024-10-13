@@ -10,7 +10,7 @@
             background-color: #fff8dc;
             margin: 0;
             padding: 0;
-            user-select: none; /* 禁止选择文字 */
+            user-select: none; 
         }
         .header {
             background-color: #333;
@@ -125,7 +125,7 @@
         }
 
         function showLogoutConfirmation(event) {
-            event.preventDefault(); // 阻止默认行为
+            event.preventDefault(); 
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('logout-confirmation').style.display = 'block';
         }
@@ -158,7 +158,7 @@
         <a href="discount.html">Promotional Activities</a>
     </div>
     <div class="container" id="main-content" style="display: block;">
-        <!-- 主内容区 -->
+        <!-- Main Content Area -->
         <div class="message">
             Welcome to Starry Sky Mall！
         </div>
