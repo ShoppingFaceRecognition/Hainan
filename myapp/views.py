@@ -12,9 +12,9 @@ from django.views.decorators.http import require_POST
 from .models import Commodity, User, Cart
 
 from myapp.model.MAN import main
-
-
-# Create your views here.
+import base64
+import os
+from django.conf import settings
 
 def is_login(view_func):
     def inner(request, *args, **kwargs):
@@ -289,7 +289,35 @@ def cart(request):
     }
     return render(request, 'items-robots/shopping_cart.html', context)
 
+def face(request):
+    return render(request, 'items-robots/face.html')
 
+def robot_camera_feed(request):
+    try:
+        # 使用 MAN 模块获取机器人摄像头图像
+        image_path, name, gender, age = main()
+        
+        # 读取图像文件并转换为 base64
+        with open(image_path, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode()
+
+        # 构建图像 URL（假设图像保存在 MEDIA_ROOT 下）
+        image_url = os.path.join(settings.MEDIA_URL, os.path.basename(image_path))
+
+        return JsonResponse({
+            'status': 'success',
+            'image_url': image_url,
+            'image_data': f'data:image/jpeg;base64,{encoded_string}',
+            'username': name,
+            'gender': gender,
+            'age': age
+        })
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        })
+    
 # 人脸识别
 def face_recognition_result(request):
     # 假设后端通过摄像头捕获到人脸识别结果并返回图像和用户信息
