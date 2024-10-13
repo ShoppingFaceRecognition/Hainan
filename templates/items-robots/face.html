@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Starry Sky Mall</title>
+    <title>星空商城 Starry Sky Mall</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,38 +11,31 @@
             margin: 0;
             padding: 0;
             user-select: none;
-            /* 禁止选择文字 */
         }
-
-        .header,
-        .footer {
+        .header, .footer {
             background-color: #333;
             color: white;
             padding: 10px;
             text-align: center;
             font-size: 24px;
         }
-
         .navbar {
             display: flex;
             justify-content: space-around;
             background-color: #444;
             padding: 10px;
         }
-
         .navbar a {
             color: white;
             text-decoration: none;
             padding: 8px 16px;
             font-size: 18px;
         }
-
         .navbar a:hover,
         .navbar a.active {
             background-color: #ddd;
             color: black;
         }
-
         .container {
             padding: 20px;
             max-width: 800px;
@@ -54,13 +46,11 @@
             text-align: center;
             position: relative;
         }
-
         .message {
             font-size: 20px;
             margin-bottom: 20px;
         }
-
-        .back-button {
+        .button {
             padding: 10px;
             background-color: #333;
             color: white;
@@ -69,12 +59,12 @@
             font-size: 16px;
             display: inline-block;
             margin-top: 20px;
+            margin-right: 10px;
+            cursor: pointer;
         }
-
-        .back-button:hover {
+        .button:hover {
             background-color: #555;
         }
-
         .circle {
             width: 300px;
             height: 300px;
@@ -86,44 +76,84 @@
             justify-content: center;
             font-size: 24px;
             color: #800080;
-            /* 紫色 */
+            overflow: hidden;
         }
-
         .loading {
             font-size: 16px;
             margin-top: 10px;
         }
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
     </style>
 </head>
-
 <body>
     <script src="../../static/js/background.js"></script>
     <div class="header">
-         Starry Sky Mall
+        星空商城 Starry Sky Mall
     </div>
     <div class="navbar">
-        <a href="/Commodity/"> View Products</a>
-        <a href="/static/ai_guodo.html">Recognition Page</a>
-        <a href="/jf_Commodity/">Points Mall</a>
-        <a href="/discount/">Promotional Activities</a>
+        <a href="/Commodity/">查看商品</a>
+        <a href="/static/ai_guodo.html">识别中的页面</a>
+        <a href="/jf_Commodity/">积分商城</a>
+        <a href="/discount/">优惠活动</a>
     </div>
     <div class="container">
+        <div class="message">
+            点击"开启摄像头"后，<br>
+            在以下圆内显示摄像头画面。
+        </div>
         <div class="circle">
-            这里就是只放摄像头的画面然后点击确认那里再展示识别结果
+            <video id="video" autoplay playsinline></video>
         </div>
-        <div class="loading">
-            Recognizing......
-        </div>
-        <a href="/identity/" class="back-button">OK</a>
-        <a href="/login/" class="back-button">Direct Login</a>
-        <a href="/" class="back-button">return</a>
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+        <button id="startCamera" class="button">开启摄像头</button>
+        <a href="/identity/" class="button">确认界面</a>
+        <a href="/login/" class="button">直接登录</a>
+        <a href="/" class="button">返回</a>
     </div>
-    <div class="footer">
-         Starry Sky Mall
-    </div>
+    <script>
+        const video = document.getElementById('video');
+        const startCameraButton = document.getElementById('startCamera');
+        const errorMessage = document.getElementById('errorMessage');
+
+        startCameraButton.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        width: { ideal: 300 }, 
+                        height: { ideal: 300 } 
+                    } 
+                });
+                video.srcObject = stream;
+                video.play();
+                startCameraButton.style.display = 'none';
+                errorMessage.style.display = 'none';
+            } catch (err) {
+                console.error("Error accessing the camera: ", err);
+                if (err.name === 'NotAllowedError') {
+                    errorMessage.textContent = "请在浏览器设置中允许访问摄像头，然后刷新页面重试。";
+                } else if (err.name === 'NotFoundError') {
+                    errorMessage.textContent = "未找到摄像头设备，请确保您的设备有可用的摄像头。";
+                } else {
+                    errorMessage.textContent = "无法访问摄像头，请确保已授予权限并刷新页面重试。";
+                }
+                errorMessage.style.display = 'block';
+            }
+        });
+
+        // 检查浏览器是否支持getUserMedia
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            startCameraButton.disabled = true;
+            errorMessage.textContent = "您的浏览器不支持访问摄像头，请尝试使用最新版本的Chrome、Firefox或Safari浏览器。";
+            errorMessage.style.display = 'block';
+        }
+    </script>
 </body>
-<script>
-
-</script>
-
 </html>
