@@ -42,6 +42,8 @@ urlpatterns = [
     path('addcart/', views.addcart),
     path('cart/', views.cart),
     path('face_recognition_result/', views.face_recognition_result, name='face_recognition_result'),
+    path('face/', views.face, name='face'),
+    path('robot-camera-feed/', views.robot_camera_feed, name='robot_camera_feed'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
