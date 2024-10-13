@@ -149,7 +149,7 @@
             <img src="{{ favorite.product.img.url }}" alt="Product Image">
             <div class="product-details">
                 <p>{{ favorite.product.name }}</p>
-                <p>价格: ¥<span class="price">{{ favorite.product.price }}</span></p>
+                <p>Price: ¥<span class="price">{{ favorite.product.price }}</span></p>
                 <form method="post" action="{% url 'remove_favorite' favorite.product.id %}">
                     {% csrf_token %}
                     <button type="submit">Remove from Favorites</button>
@@ -159,7 +159,7 @@
         {% endfor %}
     </div>
     <div class="buttons">
-        <button onclick="goBack()">返回</button>
+        <button onclick="goBack()">Return</button>
         <button onclick="location.href='shopping_cart.html'">View Cart</button>
     </div>
 </div>
