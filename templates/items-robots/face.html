@@ -106,53 +106,62 @@
     </div>
     <div class="container">
         <div class="message">
-            After clicking 'Enable Camera'，<br>
-            Display the camera feed within the following circle.
+            After clicking 'Enable Robot Camera',<br>
+            The robot's camera feed will be displayed within the following circle.
         </div>
         <div class="circle">
-            <video id="video" autoplay playsinline></video>
+            <img id="robotCameraFeed" alt="Robot Camera Feed" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
         <div id="errorMessage" class="error-message" style="display: none;"></div>
-        <button id="startCamera" class="button">Turn On Camera</button>
+        <button id="startRobotCamera" class="button">Turn On Robot Camera</button>
         <a href="/identity/" class="button">Confirmation Interface</a>
         <a href="/login/" class="button">Direct Login</a>
         <a href="/" class="button">Return</a>
     </div>
     <script>
-        const video = document.getElementById('video');
-        const startCameraButton = document.getElementById('startCamera');
+        const robotCameraFeed = document.getElementById('robotCameraFeed');
+        const startRobotCameraButton = document.getElementById('startRobotCamera');
         const errorMessage = document.getElementById('errorMessage');
 
-        startCameraButton.addEventListener('click', async () => {
+        startRobotCameraButton.addEventListener('click', async () => {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        width: { ideal: 300 }, 
-                        height: { ideal: 300 } 
-                    } 
-                });
-                video.srcObject = stream;
-                video.play();
-                startCameraButton.style.display = 'none';
-                errorMessage.style.display = 'none';
-            } catch (err) {
-                console.error("Error accessing the camera: ", err);
-                if (err.name === 'NotAllowedError') {
-                    errorMessage.textContent = "Please allow camera access in your browser settings, then refresh the page and try again.";
-                } else if (err.name === 'NotFoundError') {
-                    errorMessage.textContent = "No camera device found. Please ensure your device has a functional camera.";
-                } else {
-                    errorMessage.textContent = "Unable to access the camera. Please ensure permission is granted and refresh the page to try again.";
+                const response = await fetch('/robot-camera-feed/');
+                if (!response.ok) {
+                    throw new Error('Failed to connect to robot camera');
                 }
+                const data = await response.json();
+                if (data.status === 'success') {
+                    robotCameraFeed.src = data.image_url;
+                    startRobotCameraButton.style.display = 'none';
+                    errorMessage.style.display = 'none';
+                    // Start continuous feed update
+                    setInterval(updateRobotCameraFeed, 1000);
+                } else {
+                    throw new Error(data.message || 'Unknown error occurred');
+                }
+            } catch (err) {
+                console.error("Error accessing the robot camera: ", err);
+                errorMessage.textContent = "Unable to access the robot camera. Please ensure the robot is online and try again.";
                 errorMessage.style.display = 'block';
             }
         });
 
-        // Check if the browser supports getUserMedia
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            startCameraButton.disabled = true;
-            errorMessage.textContent = "Your browser does not support camera access. Please try using the latest version of Chrome, Firefox, or Safari.";
-            errorMessage.style.display = 'block';
+        async function updateRobotCameraFeed() {
+            try {
+                const response = await fetch('/robot-camera-feed/');
+                if (!response.ok) {
+                    throw new Error('Failed to update robot camera feed');
+                }
+                const data = await response.json();
+                if (data.status === 'success') {
+                    robotCameraFeed.src = data.image_url;
+                } else {
+                    throw new Error(data.message || 'Unknown error occurred');
+                }
+            } catch (err) {
+                console.error("Error updating robot camera feed: ", err);
+                // Optionally handle error
+            }
         }
     </script>
 </body>
