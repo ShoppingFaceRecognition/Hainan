@@ -147,18 +147,18 @@
         }
 
         function confirm() {
-            alert("确认功能尚未实现");
-            // 在这里添加确认的逻辑
+            alert("Confirmation Function Not Yet Implemented");
+            // Add confirmation logic here
         }
 
         function retry() {
-            alert("重新扫描功能尚未实现");
-            // 在这里添加重新扫描的逻辑
+            alert("Rescan Function Not Yet Implemented");
+            // Add re-scan logic here
         }
 
         function register() {
-            alert("注册功能尚未实现");
-            // 在这里添加注册的逻辑
+            alert("Registration Function Not Yet Implemented");
+            // Add registration logic here
         }
 
         // Add active class to the current button (highlight it)
@@ -179,7 +179,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        // 更新用户名和手机号
+                        // Update username and phone number
                         document.getElementById('username').textContent = 'Username: ' + data.username;
                         document.getElementById('phone').textContent = 'Phone Number: ' + data.phone;
                     }
@@ -189,7 +189,7 @@
                 });
         }
 
-        // 页面加载完毕后自动调用
+        // Automatically call after the page has loaded
         window.onload = fetchFaceRecognitionResult;
     </script>
 </body>
