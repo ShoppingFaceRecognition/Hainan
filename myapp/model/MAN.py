@@ -1,11 +1,9 @@
-import os
-os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 import socket
 import numpy as np
 import cv2
 from ultralytics import YOLO
 import time
-from myapp.model.Recognize import process_image
+import os
 
 # 设置UDP服务器地址和端口
 UDP_IP = "0.0.0.0"  # 使用0.0.0.0来监听所有网络接口
@@ -15,7 +13,6 @@ MAX_PACKET_SIZE = 1024
 # 创建UDP套接字
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
-
 
 def receive_image(sock):
     # 接收开始信号
@@ -39,7 +36,6 @@ def receive_image(sock):
 
     return image_data
 
-
 def main():
     # 加载 YOLOv8 模型
     model = YOLO('myapp/model/yolov8n-face.pt')
@@ -47,9 +43,17 @@ def main():
     last_saved_time = time.time()
 
     # 创建保存截图的文件夹
-    save_path = os.path.join(os.path.expanduser("~"), "Desktop", "YOLO_Screenshots")
+    # 获取当前文件所在目录
+    project_path = os.path.dirname(os.path.abspath(__file__))
+
+    # 在项目目录下创建保存截图的文件夹
+    save_path = "media/images/YOLO_Screenshots"
+
+    # 如果文件夹不存在，则创建它
     if not os.path.exists(save_path):
         os.makedirs(save_path)
+
+    print(f"Screenshots will be saved in: {save_path}")
 
     while True:
         try:
@@ -77,18 +81,15 @@ def main():
 
                 # 显示结果
                 cv2.imshow('ESP32-CAM', result_image)
-                # lyh
-                result_image.save("result.jpg")
-                # 启动次程序
-                path, name, gender, age = process_image('result.jpg')
 
                 # 每5秒保存一次屏幕截图
                 current_time = time.time()
                 if has_face and (current_time - last_saved_time) >= 5:
-                    screenshot_name = os.path.join(save_path, f"screenshot_{int(current_time)}.jpg")
+                    screenshot_name = os.path.join(save_path, f"01.jpg")
                     cv2.imwrite(screenshot_name, result_image)
                     print(f"Screenshot saved to {screenshot_name}")
                     last_saved_time = current_time
+                    break
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -98,8 +99,7 @@ def main():
     # 关闭窗口
     cv2.destroyAllWindows()
     sock.close()
-    return path, name, gender, age
-
+    return '/media/images/YOLO_Screenshots/01.jpg'
 
 if __name__ == "__main__":
     main()

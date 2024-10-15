@@ -135,7 +135,7 @@
         <div class="title">
         </div>
         <div class="profile">
-            <img src="{{user.face_img_path}}" alt="用户头像">
+            <img id="face-image" src="/media/images/commodity/result.jpg" alt="用户头像">
             <div class="profile-info">
                 <p>Username：{{ user.username }}</p>
                 <p>Points：{{ user.fen }}</p>
@@ -157,6 +157,7 @@
     </div>
 
     <script>
+        document.getElementById('face-image').src = '/media/images/commodity/result.jpg?' + new Date().getTime();
         function goBack() {
             window.history.back();
         }

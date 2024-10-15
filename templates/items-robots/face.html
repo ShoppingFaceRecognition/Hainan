@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,30 +13,36 @@
             padding: 0;
             user-select: none;
         }
-        .header, .footer {
+
+        .header,
+        .footer {
             background-color: #333;
             color: white;
             padding: 10px;
             text-align: center;
             font-size: 24px;
         }
+
         .navbar {
             display: flex;
             justify-content: space-around;
             background-color: #444;
             padding: 10px;
         }
+
         .navbar a {
             color: white;
             text-decoration: none;
             padding: 8px 16px;
             font-size: 18px;
         }
+
         .navbar a:hover,
         .navbar a.active {
             background-color: #ddd;
             color: black;
         }
+
         .container {
             padding: 20px;
             max-width: 800px;
@@ -46,10 +53,12 @@
             text-align: center;
             position: relative;
         }
+
         .message {
             font-size: 20px;
             margin-bottom: 20px;
         }
+
         .button {
             padding: 10px;
             background-color: #333;
@@ -62,9 +71,11 @@
             margin-right: 10px;
             cursor: pointer;
         }
+
         .button:hover {
             background-color: #555;
         }
+
         .circle {
             width: 300px;
             height: 300px;
@@ -78,21 +89,25 @@
             color: #800080;
             overflow: hidden;
         }
+
         .loading {
             font-size: 16px;
             margin-top: 10px;
         }
+
         #video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         .error-message {
             color: red;
             margin-top: 10px;
         }
     </style>
 </head>
+
 <body>
     <script src="../../static/js/background.js"></script>
     <div class="header">
@@ -106,23 +121,24 @@
     </div>
     <div class="container">
         <div class="message">
-            After clicking 'Enable Robot Camera',<br>
-            The robot's camera feed will be displayed within the following circle.
+            Please click 'Enable Robot Camera' to start recognizing
         </div>
         <div class="circle">
-            <img id="robotCameraFeed" alt="Robot Camera Feed" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="/media/images/YOLO_Screenshots/01.jpg" id="robotCameraFeed" alt="我图呢"
+                style="width: 100%; height: 100%; object-fit: cover;">
         </div>
-        <div id="errorMessage" class="error-message" style="display: none;"></div>
         <button id="startRobotCamera" class="button">Turn On Robot Camera</button>
         <a href="/identity/" class="button">Confirmation Interface</a>
         <a href="/login/" class="button">Direct Login</a>
         <a href="/" class="button">Return</a>
     </div>
     <script>
+        document.getElementById('robotCameraFeed').src = '/media/images/YOLO_Screenshots/01.jpg?' + new Date().getTime();
         const robotCameraFeed = document.getElementById('robotCameraFeed');
         const startRobotCameraButton = document.getElementById('startRobotCamera');
         const errorMessage = document.getElementById('errorMessage');
 
+        // 在页面加载时启动定时更新
         startRobotCameraButton.addEventListener('click', async () => {
             try {
                 const response = await fetch('/robot-camera-feed/');
@@ -130,12 +146,15 @@
                     throw new Error('Failed to connect to robot camera');
                 }
                 const data = await response.json();
+                console.log(data);
                 if (data.status === 'success') {
                     robotCameraFeed.src = data.image_url;
+                    console.log(data.image_url);
                     startRobotCameraButton.style.display = 'none';
                     errorMessage.style.display = 'none';
-                    // Start continuous feed update
-                    setInterval(updateRobotCameraFeed, 1000);
+
+                    // 自动开始定时更新画面
+                    setInterval(updateRobotCameraFeed, 1000); // 每秒更新一次画面
                 } else {
                     throw new Error(data.message || 'Unknown error occurred');
                 }
@@ -160,9 +179,11 @@
                 }
             } catch (err) {
                 console.error("Error updating robot camera feed: ", err);
-                // Optionally handle error
+                // 你可以选择在此处理错误
             }
         }
     </script>
+
 </body>
+
 </html>

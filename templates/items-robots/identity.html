@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             margin: 0;
             padding: 0;
         }
+
         .header {
             background-color: #333;
             color: white;
@@ -18,23 +20,27 @@
             text-align: center;
             font-size: 24px;
         }
+
         .navbar {
             display: flex;
             justify-content: space-around;
             background-color: #444;
             padding: 10px;
         }
+
         .navbar a {
             color: white;
             text-decoration: none;
             padding: 8px 16px;
             font-size: 18px;
         }
+
         .navbar a:hover,
         .navbar a.active {
             background-color: #ddd;
             color: black;
         }
+
         .container {
             padding: 20px;
             max-width: 800px;
@@ -44,39 +50,47 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
         .title {
             font-size: 18px;
             color: purple;
             margin-bottom: 20px;
         }
+
         .result {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
         }
+
         .result img {
             width: 150px;
             height: 200px;
             background-color: #ccc;
             margin-right: 20px;
         }
+
         .result-info {
             text-align: left;
         }
+
         .result-info p {
             margin: 5px 0;
         }
+
         .question {
             font-size: 18px;
             margin-top: 20px;
             margin-bottom: 20px;
         }
+
         .buttons {
             display: flex;
             justify-content: space-around;
             margin-top: 20px;
         }
+
         .buttons button {
             width: 120px;
             height: 120px;
@@ -92,11 +106,13 @@
             align-items: center;
             text-align: center;
         }
+
         .buttons button:hover {
             transform: scale(1.1);
             background-color: #555;
             font-size: 18px;
         }
+
         .back-button {
             padding: 10px;
             background-color: #333;
@@ -107,15 +123,17 @@
             display: inline-block;
             margin-top: 20px;
         }
+
         .back-button:hover {
             background-color: #555;
         }
     </style>
 </head>
+
 <body>
     <script src="../../static/js/background.js"></script>
     <div class="header">
-         Starry Sky Mall
+        Starry Sky Mall
     </div>
     <div class="navbar">
         <a href="/Commodity/">View Products</a>
@@ -142,6 +160,7 @@
     </div>
 
     <script>
+        document.getElementById('face-image').src = '/media/images/commodity/result.jpg?' + new Date().getTime();
         function goBack() {
             window.history.back();
         }
@@ -165,9 +184,9 @@
         var navbar = document.querySelector('.navbar');
         var links = navbar.getElementsByTagName('a');
         for (var i = 0; i < links.length; i++) {
-            links[i].addEventListener('click', function() {
+            links[i].addEventListener('click', function () {
                 var current = document.getElementsByClassName('active');
-                if (current.length > 0) { 
+                if (current.length > 0) {
                     current[0].className = current[0].className.replace(' active', '');
                 }
                 this.className += ' active';
@@ -180,8 +199,8 @@
                 .then(data => {
                     if (data.status === 'success') {
                         // Update username and phone number
-                        document.getElementById('username').textContent = 'Username: ' + data.username;
-                        document.getElementById('phone').textContent = 'Phone Number: ' + data.phone;
+                        username = 'Username: ' + data.username;
+                        phone = 'Phone Number: ' + data.phone;
                     }
                 })
                 .catch(error => {
@@ -193,4 +212,5 @@
         window.onload = fetchFaceRecognitionResult;
     </script>
 </body>
+
 </html>

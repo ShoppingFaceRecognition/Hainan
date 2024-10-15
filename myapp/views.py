@@ -13,12 +13,12 @@ from .models import Commodity, User, Cart
 
 from myapp.model.Recognize import process_image
 
-
 # Create your views here.
 from myapp.model.MAN import main
 import base64
 import os
 from django.conf import settings
+
 
 def is_login(view_func):
     def inner(request, *args, **kwargs):
@@ -293,43 +293,56 @@ def cart(request):
     }
     return render(request, 'items-robots/shopping_cart.html', context)
 
+
 def face(request):
     return render(request, 'items-robots/face.html')
 
+
+latest_image_path = 'media/images/YOLO_Screenshots/01.jpg'
+
+
 def robot_camera_feed(request):
+    global latest_image_path
     try:
-        # 使用 MAN 模块获取机器人摄像头图像
-        image_path, name, gender, age = main()
-        
+        # 调用 main 函数捕获图片，并获取最新的截图路径
+        image_path = main()  # 获取最新的截图路径
+        print(image_path)
+        # 检查图像文件是否存在
+        if not image_path or not os.path.exists(image_path):
+            return JsonResponse({
+                'status': 'error',
+                'message': 'No screenshot available'
+            })
+
+        latest_image_path = image_path
+
         # 读取图像文件并转换为 base64
         with open(image_path, "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode()
 
-        # 构建图像 URL（假设图像保存在 MEDIA_ROOT 下）
-        image_url = os.path.join(settings.MEDIA_URL, os.path.basename(image_path))
-
         return JsonResponse({
             'status': 'success',
-            'image_url': image_url,
+            'image_url': latest_image_path,
             'image_data': f'data:image/jpeg;base64,{encoded_string}',
-            'username': name,
-            'gender': gender,
-            'age': age
         })
     except Exception as e:
         return JsonResponse({
             'status': 'error',
             'message': str(e)
         })
-    
+
+
 # 人脸识别
 def face_recognition_result(request):
+    global latest_image_path
     # 假设后端通过摄像头捕获到人脸识别结果并返回图像和用户信息
-    path, name, gender, age = process_image('media/images/People/00.jpg')
+    path, name, gender, age = process_image(latest_image_path)
     face_recognition_data = {
         'status': 'success',
         'image_url': path,  # 这个 URL 需要指向静态文件或媒体文件
         'username': name,
+        'gender': gender,
+        'age': age,
         'phone': '123****5678'
     }
 
