@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -129,88 +128,96 @@
         }
     </style>
 </head>
-
 <body>
-    <script src="../../static/js/background.js"></script>
-    <div class="header">
-        Starry Sky Mall
-    </div>
-    <div class="navbar">
-        <a href="/Commodity/">View Products</a>
-        <a href="/jf_Commodity/" class="active">Points Mall</a>
-        <a href="/discount/">Promotional Activities</a>
-        <a href="/logout/">Log Out</a>
-    </div>
-    <div class="container">
-        <div class="title">Please confirm your personal information</div>
-        <div class="result">
-            <img id="face-image" src="/media/images/commodity/result.jpg" alt="扫描人像">
-            <div class="result-info">
-                <p>Username: Test User</p>
-                <p>Phone Number: 123****5678</p>
-            </div>
+<script src="../../static/js/background.js"></script>
+<div class="header">
+    Starry Sky Mall
+</div>
+<div class="navbar">
+    <a href="/Commodity/">View Products</a>
+    <a href="/jf_Commodity/" class="active">Points Mall</a>
+    <a href="/discount/">Promotional Activities</a>
+    <a href="/logout/">Log Out</a>
+</div>
+<div class="container">
+    <div class="title">Please confirm your personal information</div>
+    <div class="result">
+        <img id="face-image" src="/media/images/commodity/result.jpg" alt="扫描人像">
+        <div class="result-info">
+            <p>Username: Test User</p>
+            <p>Phone Number: *******1029</p>
         </div>
-        <div class="title">Is this your account?</div>
-        <div class="buttons">
-            <button onclick="confirm()">Yes</button>
-            <button onclick="retry()">No,Rescan</button>
-            <button onclick="register()">No, Register as Member</button>
-        </div>
-        <a href="/face/" class="back-button">return</a>
     </div>
+    <div class="title">Is this your account?</div>
+    <div class="buttons">
+        <button onclick="confirm()">Yes</button>
+        <button onclick="retry()">No,Rescan</button>
+        <button onclick="register()">No, Register as Member</button>
+    </div>
+    <a href="/face/" class="back-button">return</a>
+</div>
 
-    <script>
-        document.getElementById('face-image').src = '/media/images/commodity/result.jpg?' + new Date().getTime();
-        function goBack() {
-            window.history.back();
-        }
+<script>
+    document.getElementById('face-image').src = '/media/images/commodity/result.jpg?' + new Date().getTime();
+    function goBack() {
+        window.history.back();
+    }
 
-        function confirm() {
-            alert("Confirmation Function Not Yet Implemented");
-            // Add confirmation logic here
-        }
-
-        function retry() {
-            alert("Rescan Function Not Yet Implemented");
-            // Add re-scan logic here
-        }
-
-        function register() {
-            alert("Registration Function Not Yet Implemented");
-            // Add registration logic here
-        }
-
-        // Add active class to the current button (highlight it)
-        var navbar = document.querySelector('.navbar');
-        var links = navbar.getElementsByTagName('a');
-        for (var i = 0; i < links.length; i++) {
-            links[i].addEventListener('click', function () {
-                var current = document.getElementsByClassName('active');
-                if (current.length > 0) {
-                    current[0].className = current[0].className.replace(' active', '');
+    function confirm() {
+        fetch('/check_login/')  // 替换为你的检查登录状态的 URL
+            .then(response => response.json())
+            .then(data => {
+                if (data.logged_in) {
+                    window.location.href = '/logined';  // 用户已登录，跳转到 logined 页面
+                } else {
+                    //alert('You need to login first!');  // 用户未登录，提示用户
+                    window.location.href = '/login';  // 可以选择跳转到登录页面或其他页面
                 }
-                this.className += ' active';
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+
+    function retry() {
+        window.location.href = '/face';
+        // Add re-scan logic here
+    }
+
+    function register() {
+        window.location.href = '/reg';
+        // Add registration logic here
+    }
+
+    // Add active class to the current button (highlight it)
+    var navbar = document.querySelector('.navbar');
+    var links = navbar.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', function () {
+            var current = document.getElementsByClassName('active');
+            if (current.length > 0) {
+                current[0].className = current[0].className.replace(' active', '');
+            }
+            this.className += ' active';
+        });
+    }
+
+    function fetchFaceRecognitionResult() {
+        fetch('/face_recognition_result/')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Update username and phone number
+                    document.getElementById('username').textContent = 'Username: ' + data.username;
+                    document.getElementById('phone').textContent = 'Phone Number: ' + data.phone;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching face recognition data:', error);
             });
-        }
+    }
 
-        function fetchFaceRecognitionResult() {
-            fetch('/face_recognition_result/')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        // Update username and phone number
-                        username = 'Username: ' + data.username;
-                        phone = 'Phone Number: ' + data.phone;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching face recognition data:', error);
-                });
-        }
-
-        // Automatically call after the page has loaded
-        window.onload = fetchFaceRecognitionResult;
-    </script>
+    // Automatically call after the page has loaded
+    window.onload = fetchFaceRecognitionResult;
+</script>
 </body>
-
 </html>

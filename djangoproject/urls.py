@@ -41,6 +41,7 @@ urlpatterns = [
     path('jf_commodity/exchange/<int:product_id>/', views.exchange_product, name='exchange_product'),
     path('addcart/', views.addcart),
     path('cart/', views.cart),
+    path('check_login/',views.check_login),
     path('face_recognition_result/', views.face_recognition_result, name='face_recognition_result'),
     path('face/', views.face, name='face'),
     path('robot-camera-feed/', views.robot_camera_feed, name='robot_camera_feed'),

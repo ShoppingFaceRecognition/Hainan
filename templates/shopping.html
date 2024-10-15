@@ -100,8 +100,8 @@
 
         .product img {
             width: 200px;
-            height: 200px; 
-            object-fit: cover; 
+            height: 200px;
+            object-fit: cover;
             transition: transform 0.5s ease;
         }
 
@@ -190,33 +190,33 @@
 </head>
 <body>
 <script src="../../static/js/background.js"></script>
-<div class="header">
-     Starry Sky Mall
+<div class="header" style="height: 60px;">
+    Starry Sky Mall
 </div>
-<div class="top-buttons">
+<div class="top-buttons" style="height: 60px;">
     <a href="/Commodity/">View Products</a>
     <a href="/jf_Commodity/">Points Mall</a>
     <a href="/discount/">Promotional Activities</a>
-    <a href="/logout/">Log Out</a>
+    <a href="/logined" id="favoriteLink">personal data</a>
 </div>
 <div class="container">
     <div class="search-bar">
-        <input type="text" placeholder="Product Search...">
+        <input type="text" placeholder="Search Product Here">
     </div>
     <div class="products" id="products">
         {% for com in commodity %}
-            <div class="product" data-id="{{ com.id }}">
-                <img src="{{ com.img.url }}" alt="Product Image">
-                <div class="description">
-                    <p>{{ com.name }}</p>
-                    <p>Price: {{ com.price }}</p>
-                    <p>Product Description：{{ com.introduce }}</p>
-                </div>
-                <div class="actions">
-                    <button class="btn btn-dark cart-button"> Add to Cart</button>
-                    <button class="btn btn-dark favorite-button">Add to Favorites</button>
-                </div>
+        <div class="product" data-id="{{ com.id }}" style="width: 250px;">
+            <img src="{{ com.img.url }}" alt="Product Image">
+            <div class="description">
+                <p>{{ com.name }}</p>
+                <p>Price: {{ com.price }}</p>
+                <p>Product Description：{{ com.introduce }}</p>
             </div>
+            <div class="actions">
+                <button class="btn btn-dark cart-button"> Add to Cart</button>
+                <button class="btn btn-dark favorite-button">Add to Favorites</button>
+            </div>
+        </div>
         {% endfor %}
     </div>
     <div class="buttons">
@@ -231,102 +231,121 @@
 </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const favoriteButtons = document.querySelectorAll('.favorite-button');
-        const cartButtons = document.querySelectorAll('.cart-button');
+        document.addEventListener('DOMContentLoaded', function() {
+            const favoriteLink = document.getElementById('favoriteLink');
 
-        favoriteButtons.forEach(button => {
-            button.addEventListener('click', event => {
-                const productElement = event.target.closest('.product');
-                const productId = productElement.getAttribute('data-id');
-                favoriteProduct(productId);
+            favoriteLink.addEventListener('click', function(event) {
+                event.preventDefault();  // 阻止默认链接跳转
+
+                fetch('/check_login/')  // 替换为你的检查登录状态的 URL
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.logged_in) {
+                            window.location.href = '/logined';  // 用户已登录，跳转到 logined 页面
+                        } else {
+                            //alert('You need to login first!');  // 用户未登录，提示用户
+                            window.location.href = '/login';  // 可以选择跳转到登录页面或其他页面
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             });
         });
+            document.addEventListener('DOMContentLoaded', () => {
+                const favoriteButtons = document.querySelectorAll('.favorite-button');
+                const cartButtons = document.querySelectorAll('.cart-button');
 
-        cartButtons.forEach(button => {
-            button.addEventListener('click', event => {
-                const productElement = event.target.closest('.product');
-                const productId = productElement.getAttribute('data-id');
-                CartProduct(productId);
+                favoriteButtons.forEach(button => {
+                    button.addEventListener('click', event => {
+                        const productElement = event.target.closest('.product');
+                        const productId = productElement.getAttribute('data-id');
+                        favoriteProduct(productId);
+                    });
+                });
+
+                cartButtons.forEach(button => {
+                    button.addEventListener('click', event => {
+                        const productElement = event.target.closest('.product');
+                        const productId = productElement.getAttribute('data-id');
+                        CartProduct(productId);
+                    });
+                });
             });
-        });
-    });
 
-    function favoriteProduct(productId) {
-        fetch('/favorite/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify({product_id: productId}),
-            credentials: 'same-origin'
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.status === 'not_logged_in') {
-                    window.location.href = '/login/';
-                } else if (data.status === 'success') {
-                    alert('Product favorited successfully.');
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    function CartProduct(productId) {
-        fetch('/addcart/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify({product_id: productId}),
-            credentials: 'same-origin'
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.status === 'not_logged_in') {
-                    window.location.href = '/login/';
-                } else if (data.status === 'success') {
-                    alert('Product added to cart successfully.');
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
+            function favoriteProduct(productId) {
+                fetch('/favorite/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({product_id: productId}),
+                    credentials: 'same-origin'
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status === 'not_logged_in') {
+                            window.location.href = '/login/';
+                        } else if (data.status === 'success') {
+                            alert('Product favorited successfully.');
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             }
-        }
-        return cookieValue;
-    }
+
+            function CartProduct(productId) {
+                fetch('/addcart/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({product_id: productId}),
+                    credentials: 'same-origin'
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status === 'not_logged_in') {
+                            window.location.href = '/login/';
+                        } else if (data.status === 'success') {
+                            alert('Product added to cart successfully.');
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
 
 </script>
 </body>

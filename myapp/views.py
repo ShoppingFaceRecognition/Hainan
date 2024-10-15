@@ -20,14 +20,11 @@ import os
 from django.conf import settings
 
 
-def is_login(view_func):
-    def inner(request, *args, **kwargs):
-        if request.session.get("username"):
-            return view_func(request, *args, **kwargs)
-        else:
-            return JsonResponse({'url': '/login', 'code': -1, 'msg': '登录后才能评论'})
-
-    return inner
+def check_login(request):
+    if request.session.get('username'):  # 检查 session 中是否有用户名
+        return JsonResponse({'logged_in': True})
+    else:
+        return JsonResponse({'logged_in': False})
 
 
 def Index(request):
