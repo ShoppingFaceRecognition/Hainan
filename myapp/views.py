@@ -51,6 +51,9 @@ def identity(request):
 def exchange(request):
     return render(request, 'items-robots/exchange.html')
 
+def place_an_order(request):
+    return render(request, 'items-robots/place_an_order.html')
+
 
 # def Commodity(request):
 #     return render(request, 'items-robots/../templates/shopping.html')

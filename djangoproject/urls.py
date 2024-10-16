@@ -45,6 +45,7 @@ urlpatterns = [
     path('face_recognition_result/', views.face_recognition_result, name='face_recognition_result'),
     path('face/', views.face, name='face'),
     path('robot-camera-feed/', views.robot_camera_feed, name='robot_camera_feed'),
+    path('place_an_order/', views.place_an_order),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
